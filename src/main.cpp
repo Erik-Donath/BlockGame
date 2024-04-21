@@ -38,13 +38,13 @@ int main() {
 
     Renderer renderer;
     renderer.ClearColor();
+    
     while (!window.ShouldClose()) {
-        Window::PollEvents();
-
         renderer.Clear();
         renderer.Draw(vao, ebo, shader);
 
         window.SwapBuffers();
+        Window::PollEvents();
     }
 
     GLClearError();
