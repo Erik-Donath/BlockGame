@@ -50,7 +50,11 @@ protected:
     size_t m_size;
 };
 
-using VertexBuffer = GLBuffer<GL_ARRAY_BUFFER>;
+class VertexBuffer: public GLBuffer<GL_ARRAY_BUFFER> {
+public:
+    explicit VertexBuffer(): GLBuffer<GL_ARRAY_BUFFER>() { }
+    VertexBuffer(const void* data, size_t size, GLenum usage=GL_STATIC_DRAW): GLBuffer<GL_ARRAY_BUFFER>(data, size, usage) { }
+};
 
 class IndexBuffer: public GLBuffer<GL_ELEMENT_ARRAY_BUFFER> {
 public:

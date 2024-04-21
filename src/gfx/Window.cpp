@@ -14,13 +14,12 @@ static void GLFW_DefaultErrorCallback(int error, const char* description_utf8) {
     std::cerr << "Error: GLFW " << error << ": " << description_utf8 << std::endl;
 }
 
-static bool windowCreated = false;
+static Window* currentWindow = nullptr;
 Window::Window(int w, int h, const char *title, bool resizable, int gl_major, int gl_minor, bool gl_core): m_handle(nullptr) {
-    if(windowCreated) {
+    if(currentWindow) {
         std::cerr << "Error: The Window class is a singleton." << std::endl;
         return;
     }
-    windowCreated = true;
 
     // Setting Default Callbacks
     glfwSetErrorCallback(GLFW_DefaultErrorCallback);
@@ -60,13 +59,14 @@ Window::Window(int w, int h, const char *title, bool resizable, int gl_major, in
     GLClearError();
     GLCall(std::cout << "Info: Loaded OpenGL " << glGetString(GL_VERSION) << std::endl);
     GLCall(glViewport(0, 0, w, h));
+    currentWindow = this;
 }
 
 Window::~Window() {
-    if(windowCreated) {
+    if(currentWindow == this) {
         glfwDestroyWindow(m_handle);
         glfwTerminate();
-        windowCreated = false;
+        currentWindow = nullptr;
     }
 }
 
