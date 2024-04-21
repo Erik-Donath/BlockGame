@@ -7,7 +7,6 @@
 
 class Renderer {
 public:
-    template<GLenum DataType>
-    void Draw(const VertexArray& vao, const IndexBuffer<DataType>& ebo, const Shader& shader) const;
+    void Draw(const VertexArray& vao, const IndexBuffer& ebo, const Shader& shader) const;
 private:
 };

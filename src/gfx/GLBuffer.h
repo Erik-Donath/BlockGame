@@ -38,9 +38,6 @@ public:
     [[nodiscard]] inline size_t GetSize() const {
         return m_size;
     }
-    [[nodiscard]] inline size_t GetCount() const {
-        return m_size / GetSizeOfType(GL_UNSIGNED_INT);
-    }
 
     [[nodiscard]] inline unsigned int GetGLId() {
         return m_glId;
@@ -54,4 +51,18 @@ protected:
 };
 
 using VertexBuffer = GLBuffer<GL_ARRAY_BUFFER>;
-using IndexBuffer = GLBuffer<GL_ELEMENT_ARRAY_BUFFER>;
+
+class IndexBuffer: public GLBuffer<GL_ELEMENT_ARRAY_BUFFER> {
+public:
+    explicit IndexBuffer(GLenum dataType): GLBuffer<GL_ELEMENT_ARRAY_BUFFER>(), m_dataType(dataType) { }
+    IndexBuffer(GLenum dataType, const void* data, size_t size, GLenum usage=GL_STATIC_DRAW): GLBuffer<GL_ELEMENT_ARRAY_BUFFER>(data, size, usage), m_dataType(dataType) { }
+
+    [[nodiscard]] inline size_t GetCount() const {
+        return m_size / GetSizeOfType(m_dataType);
+    }
+    [[nodiscard]] inline GLenum GetDataType() const {
+        return m_dataType;
+    }
+protected:
+    GLenum m_dataType;
+};

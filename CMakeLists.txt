@@ -29,8 +29,8 @@ add_executable(HelloCMake
 
         # Base
         src/base/GFX.h
-        #src/base/Renderer.cpp
-        #src/base/Renderer.h
+        src/base/Renderer.h
+        src/base/Renderer.cpp
 )
 
 #Include Libaries
