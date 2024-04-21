@@ -12,8 +12,7 @@ public:
     VertexArray();
     ~VertexArray();
 
-    template<GLenum DataType>
-    void AddBuffer(const VertexBuffer<DataType>& vbo, const VertexBufferLayout& layout) const;
+    void AddBuffer(const VertexBuffer& vbo, const VertexBufferLayout& layout) const;
 
     void Bind() const;
     void Unbind() const;

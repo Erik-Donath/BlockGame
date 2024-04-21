@@ -21,7 +21,6 @@ add_executable(HelloCMake
         src/gfx/Window.h
         src/gfx/Window.cpp
         src/gfx/GLBuffer.h
-        src/gfx/GLBuffer.cpp
         src/gfx/VertexArray.h
         src/gfx/VertexArray.cpp
         src/gfx/VertexBufferLayout.h

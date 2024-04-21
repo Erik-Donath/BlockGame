@@ -14,10 +14,9 @@ VertexArray::~VertexArray() {
     GLCall(glDeleteVertexArrays(1, &m_glId));
 }
 
-template<GLenum DataType>
-void VertexArray::AddBuffer(const VertexBuffer<DataType> &vbo, const VertexBufferLayout &layout) const {
+void VertexArray::AddBuffer(const VertexBuffer& vbo, const VertexBufferLayout &layout) const {
     Bind();
-    vbo.Bind(0);
+    vbo.Bind();
 
     const std::vector<VertexBufferElement> &elements = layout.GetElements();
     unsigned long long int offset = 0;

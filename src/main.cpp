@@ -19,14 +19,13 @@ int main() {
     Window window(800, 600, "Hello CMake");
 
     VertexArray vao;
-
-    VertexBuffer<GL_FLOAT> vbo(vertices, sizeof(vertices));
+    VertexBuffer vbo(vertices, sizeof(vertices));
 
     VertexBufferLayout vbol;
     vbol.Push<GL_FLOAT>(2);
-    vao.AddBuffer<GL_FLOAT>(vbo, vbol);
+    vao.AddBuffer(vbo, vbol);
 
-    IndexBuffer<GL_UNSIGNED_INT> ebo(indices, sizeof(indices));
+    IndexBuffer ebo(indices, sizeof(indices));
     Shader shader({vs_src, fs_src, false });
 
     // Unbind everything
