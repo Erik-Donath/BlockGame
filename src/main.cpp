@@ -37,18 +37,11 @@ int main() {
     GLClearError();
 
     Renderer renderer;
+    renderer.ClearColor();
     while (!window.ShouldClose()) {
         Window::PollEvents();
 
-        GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
-        /*
-        vao.Bind();
-        ebo.Bind();
-        shader.Bind();
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-         */
+        renderer.Clear();
         renderer.Draw(vao, ebo, shader);
 
         window.SwapBuffers();

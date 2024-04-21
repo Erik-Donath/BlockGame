@@ -7,6 +7,8 @@
 
 class Renderer {
 public:
+    void Clear() const;
+    void ClearColor(float r = 0.2f, float g = 0.3f, float b = 0.3f, float a = 1.0f) const;
     void Draw(const VertexArray& vao, const IndexBuffer& ebo, const Shader& shader) const;
 private:
 };
