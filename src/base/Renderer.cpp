@@ -17,6 +17,6 @@ void Renderer::Draw(const VertexArray &vao, const IndexBuffer &ebo, const Shader
     vao.Bind();
     ebo.Bind();
     shader.Bind();
+
     GLCall(glDrawElements(GL_TRIANGLES, ebo.GetCount(), ebo.GetDataType(), nullptr));
 }
-

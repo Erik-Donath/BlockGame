@@ -2,8 +2,8 @@
 #include "base/GFX.h"
 #include "base/Renderer.h"
 
-const char* vs_src = "#version 330 core\nlayout (location = 0) in vec4 aPos;\nvoid main() {\n   gl_Position = aPos;\n}\0";
-const char* fs_src = "#version 330 core\nout vec4 FragColor;\nvoid main() {\n   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n}\0";
+const char* vs_src = "#version 330 core\nlayout (location = 0) in vec4 aPos;\nout vec4 vPos;\nvoid main() {\n    vPos = aPos;\n    gl_Position = aPos;\n}\0";
+const char* fs_src = "#version 330 core\nin vec4 vPos;\nout vec4 FragColor;\nvoid main() {\n    FragColor = vec4((vPos.r + 1) / 2, (vPos.g + 1) / 2, 0.0f, 1.0f);\n}\0";
 
 float vertices[] = {
         0.5f, 0.5f,   // top right
@@ -38,7 +38,7 @@ int main() {
 
     Renderer renderer;
     renderer.ClearColor();
-    
+
     while (!window.ShouldClose()) {
         renderer.Clear();
         renderer.Draw(vao, ebo, shader);
