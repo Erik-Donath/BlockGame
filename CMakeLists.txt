@@ -37,7 +37,7 @@ add_executable(HelloCMake
 set(Include_DIR "${PROJECT_SOURCE_DIR}/include")
 
 # GLFW
-add_subdirectory("${Include_DIR}/glfw-3.4")
+add_subdirectory("${Include_DIR}/glfw")
 target_link_libraries(HelloCMake glfw)
 
 # GLAD
