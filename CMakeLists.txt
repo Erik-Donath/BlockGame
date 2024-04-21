@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(HelloCMake)
+project(BlockGame)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
@@ -11,7 +11,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only" FORCE)
 
-add_executable(HelloCMake
+add_executable(BlockGame
         # Application
         src/main.cpp
 
@@ -38,11 +38,11 @@ set(Include_DIR "${PROJECT_SOURCE_DIR}/include")
 
 # GLFW
 add_subdirectory("${Include_DIR}/glfw")
-target_link_libraries(HelloCMake glfw)
+target_link_libraries(BlockGame glfw)
 
 # GLAD
 add_subdirectory("${Include_DIR}/glad")
-target_link_libraries(HelloCMake glad)
+target_link_libraries(BlockGame glad)
 
 # OpenGL
 # find_package(OpenGL REQUIRED)
