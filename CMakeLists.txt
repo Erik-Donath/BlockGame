@@ -41,7 +41,7 @@ add_subdirectory("${Include_DIR}/glfw")
 target_link_libraries(BlockGame glfw)
 
 # GLAD
-add_subdirectory("${Include_DIR}/glad")
+add_subdirectory("${Include_DIR}/glad-cmake")
 target_link_libraries(BlockGame glad)
 
 # OpenGL
