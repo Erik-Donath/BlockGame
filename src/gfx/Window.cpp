@@ -14,7 +14,14 @@ static void GLFW_DefaultErrorCallback(int error, const char* description_utf8) {
     std::cerr << "Error: GLFW " << error << ": " << description_utf8 << std::endl;
 }
 
-Window::Window(int w, int h, const char *title, bool resizable, int gl_major, int gl_minor, bool gl_core) {
+static bool windowCreated = false;
+Window::Window(int w, int h, const char *title, bool resizable, int gl_major, int gl_minor, bool gl_core): m_handle(nullptr) {
+    if(windowCreated) {
+        std::cerr << "Error: The Window class is a singleton." << std::endl;
+        return;
+    }
+    windowCreated = true;
+
     // Setting Default Callbacks
     glfwSetErrorCallback(GLFW_DefaultErrorCallback);
 
@@ -56,8 +63,11 @@ Window::Window(int w, int h, const char *title, bool resizable, int gl_major, in
 }
 
 Window::~Window() {
-    glfwDestroyWindow(m_handle);
-    glfwTerminate();
+    if(windowCreated) {
+        glfwDestroyWindow(m_handle);
+        glfwTerminate();
+        windowCreated = false;
+    }
 }
 
 void Window::PollEvents() {

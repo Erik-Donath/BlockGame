@@ -5,13 +5,22 @@
 const char* vs_src = "#version 330 core\nlayout (location = 0) in vec4 aPos;\nout vec4 vPos;\nvoid main() {\n    vPos = aPos;\n    gl_Position = aPos;\n}\0";
 const char* fs_src = "#version 330 core\nin vec4 vPos;\nout vec4 FragColor;\nvoid main() {\n    FragColor = vec4((vPos.r + 1) / 2, (vPos.g + 1) / 2, 0.0f, 1.0f);\n}\0";
 
-float obj_vertices[] = {
+float obj1_vertices[] = {
+        -0.55f, -0.55f,   // top right
+        -1.0f, -1.0f,  // bottom right
+        -0.75f,0.75f,  // bottom left
+};
+GLuint obj1_indices[] = {     // note that we start from 0
+        0, 1, 2,   // first triangle
+};
+
+float obj2_vertices[] = {
         0.5f, 0.5f,   // top right
         0.5f, -0.5f,  // bottom right
         -0.5f,-0.5f,  // bottom left
         -0.5f,0.5f    // top left
 };
-GLuint obj_indices[] = {     // note that we start from 0
+GLuint obj2_indices[] = {     // note that we start from 0
         0, 1, 3,   // first triangle
         1, 2, 3    // second triangle
 };
@@ -38,11 +47,16 @@ int main() {
 
     VertexBufferLayout layout;
     layout.Push<GL_FLOAT>(2);
-    Obj obj(obj_vertices, obj_indices, sizeof(obj_vertices), sizeof(obj_indices), layout);
+
+
+    Obj obj1(obj1_vertices, obj1_indices, sizeof(obj1_vertices), sizeof(obj1_indices), layout);
+    Obj obj2(obj2_vertices, obj2_indices, sizeof(obj2_vertices), sizeof(obj2_indices), layout);
+
     Shader shader({vs_src, fs_src, false });
 
     // Unbind everything
-    obj.Unbind();
+    obj1.Unbind();
+    obj2.Unbind();
     shader.Unbind();
     GLClearError();
 
@@ -51,7 +65,8 @@ int main() {
 
     while (!window.ShouldClose()) {
         renderer.Clear();
-        renderer.Draw(obj.vao, obj.ebo, shader);
+        renderer.Draw(obj1.vao, obj1.ebo, shader);
+        renderer.Draw(obj2.vao, obj2.ebo, shader);
 
         window.SwapBuffers();
         Window::PollEvents();
