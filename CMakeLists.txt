@@ -4,9 +4,6 @@ project(BlockGame)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
-#set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug$<$<CONFIG:Debug>:Debug>")
-#set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
-
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only" FORCE)
@@ -32,6 +29,9 @@ add_executable(BlockGame
         src/base/Renderer.h
         src/base/Renderer.cpp
 )
+
+target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res")
+#target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="./res")
 
 #Include Libaries
 set(Include_DIR "${PROJECT_SOURCE_DIR}/include")
