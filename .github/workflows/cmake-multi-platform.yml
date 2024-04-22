@@ -47,7 +47,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-          wayland-version: "1.35.0"
+          wayland-version: "1.22.0"
+          wayland-scanner: "1.22.0"
+          wayland-protocols-version: "1.31"
           submodules: recursive
 
     - name: Set reusable strings
