@@ -3,10 +3,10 @@
 #include "base/Renderer.h"
 
 float obj1_vertices[] = {
-        0.5f, 0.5f,   // top right
-        0.5f, -0.5f,  // bottom right
-        -0.5f,-0.5f,  // bottom left
-        -0.5f,0.5f    // top left
+         0.5f,  0.5f, 1.0f, 1.0f,   // top right
+         0.5f, -0.5f, 1.0f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f, 0.0f, 1.0f // top left
 };
 GLuint obj1_indices[] = {     // note that we start from 0
         0, 1, 3,   // first triangle
@@ -35,7 +35,8 @@ int main() {
     Window window(800, 600, "Block Game");
 
     VertexBufferLayout layout;
-    layout.Push<GL_FLOAT>(2);
+    layout.Push<GL_FLOAT>(2); // Position
+    layout.Push<GL_FLOAT>(2); // UV-Coord
 
 
     Object obj1(obj1_vertices, obj1_indices, sizeof(obj1_vertices), sizeof(obj1_indices), layout);
@@ -53,6 +54,9 @@ int main() {
 
     while (!window.ShouldClose()) {
         renderer.Clear();
+
+        texture.Bind(0);
+        shader.SetUniform1i("u_Texture", 0);
         renderer.Draw(obj1.vao, obj1.ebo, shader);
 
         window.SwapBuffers();
