@@ -12,3 +12,5 @@
 
 #include "../gfx/Shader.h"
 #include "../gfx/VertexArray.h"
+
+#include "../gfx/Texture.h"

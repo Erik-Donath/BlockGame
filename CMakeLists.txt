@@ -28,6 +28,8 @@ add_executable(BlockGame
         src/base/GFX.h
         src/base/Renderer.h
         src/base/Renderer.cpp
+        src/gfx/Texture.cpp
+        src/gfx/Texture.h
 )
 
 target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res")
