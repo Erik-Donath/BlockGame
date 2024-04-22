@@ -1,6 +1,13 @@
+#include <string>
+#include <vector>
+#include <random>
+#include <filesystem>
+
 #include <iostream>
 #include "base/GFX.h"
 #include "base/Renderer.h"
+
+namespace fs = std::filesystem;
 
 float obj1_vertices[] = {
          0.5f,  0.5f, 1.0f, 1.0f,   // top right
@@ -52,7 +59,7 @@ struct Object {
 
 int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
-    Window window(800, 600, "Block Game", true, 4, 6);
+    Window window(1920,  1080, "Block Game", true, 3, 3);
 
     // Enabling Blending
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -63,6 +70,17 @@ int main() {
     layout.Push<GL_FLOAT>(2); // Position
     layout.Push<GL_FLOAT>(2); // UV-Coord
 
+    // Pick random Background
+    std::vector<std::string> files;
+    for (const auto & entry : fs::directory_iterator(RESOURCES_PATH "/backgrounds/"))
+        files.push_back(entry.path().string());
+
+    std::random_device r;
+    std::default_random_engine e1(r());
+    std::uniform_int_distribution<int> uniform_dist(0, (int)files.size());
+    int mean = uniform_dist(e1);
+
+
     // Creating Object
     Shader shader(RESOURCES_PATH "/shader.glsl");
     Object obj1(obj1_vertices, obj1_indices, sizeof(obj1_vertices), sizeof(obj1_indices), layout);
@@ -70,7 +88,7 @@ int main() {
     Object obj3(obj3_vertices, obj3_indices, sizeof(obj3_vertices), sizeof(obj3_indices), layout);
     Texture texture1(RESOURCES_PATH "/logo.jpg");
     Texture texture2(RESOURCES_PATH "/hello.png");
-    Texture texture3(RESOURCES_PATH "/anno.jpg");
+    Texture texture3(files[mean]);
 
     // Unbind everything & Clearing Errors
     obj1.Unbind();
