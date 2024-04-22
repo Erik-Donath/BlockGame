@@ -89,6 +89,7 @@ int main() {
     Texture texture1(RESOURCES_PATH "/logo.jpg");
     Texture texture2(RESOURCES_PATH "/hello.png");
     Texture texture3(files[mean]);
+    std::cout << files[mean] << std::endl;
 
     // Unbind everything & Clearing Errors
     obj1.Unbind();
