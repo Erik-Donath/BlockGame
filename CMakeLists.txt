@@ -40,10 +40,14 @@ set(Include_DIR "${PROJECT_SOURCE_DIR}/include")
 add_subdirectory("${Include_DIR}/glfw")
 target_link_libraries(BlockGame glfw)
 
+# OpenGL
+# find_package(OpenGL REQUIRED)
+# target_link_libraries(HelloCMake OpenGL::GL)
+
 # GLAD
 add_subdirectory("${Include_DIR}/glad")
 target_link_libraries(BlockGame glad)
 
-# OpenGL
-# find_package(OpenGL REQUIRED)
-# target_link_libraries(HelloCMake OpenGL::GL)
+# STB
+add_subdirectory("${Include_DIR}/stb")
+target_link_libraries(BlockGame stb)

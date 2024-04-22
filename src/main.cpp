@@ -40,7 +40,7 @@ struct Obj {
 };
 
 int main() {
-    std::cout << "Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
+    std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
     Window window(800, 600, "Block Game");
 
     VertexBufferLayout layout;
