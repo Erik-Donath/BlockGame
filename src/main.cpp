@@ -32,7 +32,7 @@ struct Object {
 
 int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
-    Window window(800, 600, "Block Game");
+    Window window(800, 600, "Block Game", false, 4, 6);
 
     VertexBufferLayout layout;
     layout.Push<GL_FLOAT>(2); // Position
