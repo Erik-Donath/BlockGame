@@ -25,17 +25,23 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Release]
-        c_compiler: [gcc, clang, cl]
+        c_compiler: [gcc, clang, cl, mingw]
         include:
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
+          - os: windows-latest
+            c_compiler: mingw
+            cpp_compiler: mingw
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
           - os: ubuntu-latest
             c_compiler: clang
             cpp_compiler: clang++
+          - os: ubuntu-latest
+            c_compiler: mingw
+            cpp_compiler: mingw
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -48,13 +54,13 @@ jobs:
     - uses: actions/checkout@v3
       with:
           submodules: recursive
-          wayland-version: "1.22.0"
-          wayland-protocols-version: "1.31"
-          libdrm-version: "2.4.114"
-          seatd-version: "0.6.4"
-          pixman-version: "0.42.0"
-          hwdata-version: "0.364"
-          wlroots-version: "0.16.2"
+          #wayland-version: "1.22.0"
+          #wayland-protocols-version: "1.31"
+          #libdrm-version: "2.4.114"
+          #seatd-version: "0.6.4"
+          #pixman-version: "0.42.0"
+          #hwdata-version: "0.364"
+          #wlroots-version: "0.16.2"
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
