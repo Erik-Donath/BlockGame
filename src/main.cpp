@@ -34,29 +34,37 @@ int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
     Window window(800, 600, "Block Game", true, 4, 6);
 
+    // Enabling Blending
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    GLCall(glEnable(GL_BLEND));
+
+    // Create Vertex Buffer Layout
     VertexBufferLayout layout;
     layout.Push<GL_FLOAT>(2); // Position
     layout.Push<GL_FLOAT>(2); // UV-Coord
 
-
+    // Creating Object
     Object obj1(obj1_vertices, obj1_indices, sizeof(obj1_vertices), sizeof(obj1_indices), layout);
     Shader shader(RESOURCES_PATH "/shader.glsl");
     Texture texture(RESOURCES_PATH "/logo.jpg");
 
-    // Unbind everything
+    // Unbind everything & Clearing Errors
     obj1.Unbind();
     shader.Unbind();
     texture.Unbind();
     GLClearError();
 
+    // Create Renderer
     Renderer renderer;
-    renderer.ClearColor();
+    renderer.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+    // Setting Texture to current
+    texture.Bind(0);
+    shader.SetUniform1i("u_Texture", 0);
 
     while (!window.ShouldClose()) {
         renderer.Clear();
 
-        texture.Bind(0);
-        shader.SetUniform1i("u_Texture", 0);
         renderer.Draw(obj1.vao, obj1.ebo, shader);
 
         window.SwapBuffers();
