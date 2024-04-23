@@ -78,9 +78,12 @@ namespace App {
 
         // Projection Matrix
         WindowSize wSize = window->GetSize();
-        glm::mat4  projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
+        glm::mat4 projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 200.0f, 0.0f));
+        glm::mat4 mvp = projection * view * model;
 
-        shader->SetUniformMat4f("uMVP", projection);
+        shader->SetUniformMat4f("uMVP", mvp);
     }
     void render() {
         shader->SetUniform1i("u_Texture", 0);
