@@ -47,6 +47,7 @@ int main() {
 
     // Enabling Blending
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    GLCall(glBlendEquation(GL_FUNC_ADD));
     GLCall(glEnable(GL_BLEND));
 
     // Create Vertex Buffer Layout
