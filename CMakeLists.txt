@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 project(BlockGame)
 
+### Setup
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
@@ -12,6 +13,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only" FORCE)
 
+### Project Architecture
 add_executable(BlockGame
         # Application
         src/main.cpp
@@ -36,10 +38,11 @@ add_executable(BlockGame
         src/gfx/Texture.h
 )
 
+# Resource directory
 target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res")
 #target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="./res")
 
-#Include Libaries
+###Include Libaries
 set(Include_DIR "${PROJECT_SOURCE_DIR}/include")
 
 # GLFW
@@ -57,3 +60,7 @@ target_link_libraries(BlockGame glad)
 # STB
 add_subdirectory("${Include_DIR}/stb")
 target_link_libraries(BlockGame stb)
+
+# GLM
+add_subdirectory("${Include_DIR}/glm")
+target_link_libraries(BlockGame glm)
