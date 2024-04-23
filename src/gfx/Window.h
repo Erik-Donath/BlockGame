@@ -6,6 +6,10 @@
 
 struct GLFWwindow;
 
+struct WindowSize {
+    int w = 0, h = 0;
+};
+
 struct Window {
 public:
     Window(int w, int h, const char *title, bool resizable = false, int gl_major = 3, int gl_minor = 3, bool gl_core = true);
@@ -14,6 +18,10 @@ public:
     static void PollEvents();
     void SwapBuffers();
     bool ShouldClose();
+
+    int GetWidth() const;
+    int GetHeight() const;
+    WindowSize GetSize() const;
 
 private:
     GLFWwindow* m_handle = nullptr;

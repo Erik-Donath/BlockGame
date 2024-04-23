@@ -91,3 +91,21 @@ void Window::SwapBuffers() {
 bool Window::ShouldClose() {
     return glfwWindowShouldClose(m_handle);
 }
+
+int Window::GetWidth() const {
+    int width, height;
+    glfwGetWindowSize(m_handle, &width, &height);
+    return width;
+}
+
+int Window::GetHeight() const {
+    int width, height;
+    glfwGetWindowSize(m_handle, &width, &height);
+    return height;
+}
+
+WindowSize Window::GetSize() const {
+    WindowSize size;
+    glfwGetWindowSize(m_handle, &size.w, &size.h);
+    return size;
+}

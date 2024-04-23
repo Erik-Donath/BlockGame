@@ -7,20 +7,20 @@
 #include "base/Renderer.h"
 
 float obj1_vertices[] = {
-         0.5f,  0.5f, 1.0f, 1.0f,   // top right
-         0.5f, -0.5f, 1.0f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f, 1.0f // top left
+         400.0f,  400.0f, 1.0f, 1.0f,   // top right
+         400.0f, 100.0f, 1.0f, 0.0f,  // bottom right
+        100.0f, 100.0f, 0.0f, 0.0f, // bottom left
+        100.0f, 400.0f, 0.0f, 1.0f // top left
 };
 GLuint obj1_indices[] = {     // note that we start from 0
         0, 1, 3,   // first triangle
         1, 2, 3    // second triangle
 };
 float obj2_vertices[] = {
-        0.25f,  0.55f, 1.0f, 1.0f,   // top right
-        0.25f, 0.05f, 1.0f, 0.0f,  // bottom right
-        -0.25f, 0.05f, 0.0f, 0.0f, // bottom left
-        -0.25f, 0.55f, 0.0f, 1.0f // top left
+        400.0f,  400.0f, 1.0f, 1.0f,   // top right
+        400.0f, 100.0f, 1.0f, 0.0f,  // bottom right
+        100.0f, 100.0f, 0.0f, 0.0f, // bottom left
+        100.0f, 400.0f, 0.0f, 1.0f // top left
 };
 GLuint obj2_indices[] = {     // note that we start from 0
         0, 1, 3,   // first triangle
@@ -46,7 +46,7 @@ struct Object {
 
 int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
-    Window window(1920,  1080, "Block Game", true, 3, 3);
+    Window window(1920,  1080, "Block Game", false, 3, 3);
 
     // Create Vertex Buffer Layout
     VertexBufferLayout layout;
@@ -78,7 +78,10 @@ int main() {
     texture2.Bind(1);
 
     // Projection Matrix
-    glm::mat4  projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+    WindowSize wSize = window.GetSize();
+    glm::mat4  projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
+    glm::vec4 vp(100.0f, 100.0f, 0.0f, 1.0f);
+
     shader.SetUniformMat4f("uMVP", projection);
 
     while (!window.ShouldClose()) {
