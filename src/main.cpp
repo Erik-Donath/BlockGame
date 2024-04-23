@@ -44,58 +44,74 @@ struct Object {
     }
 };
 
+namespace App {
+    Renderer* renderer;
+
+    Object* obj1;
+    Object* obj2;
+    Texture* tex1;
+    Texture* tex2;
+    Shader* shader;
+
+    void setup(Window* window) {
+
+        // Create Vertex Buffer Layout
+        VertexBufferLayout layout;
+        layout.Push<GL_FLOAT>(2); // Position
+        layout.Push<GL_FLOAT>(2); // UV-Coord
+
+        // Creating Object
+        obj1 = new Object(obj1_vertices, obj1_indices, sizeof(obj1_vertices), sizeof(obj1_indices), layout);
+        obj2 = new Object(obj2_vertices, obj2_indices, sizeof(obj2_vertices), sizeof(obj2_indices), layout);
+        tex1 = new Texture(RESOURCES_PATH "/logo.jpg");
+        tex2 = new Texture(RESOURCES_PATH "/hello.png");
+        shader = new Shader(RESOURCES_PATH "/shader.glsl");
+
+        // Create Renderer
+        renderer = new Renderer();
+        renderer->SetBlendType(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
+        renderer->ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+        // Binding Texture
+        tex1->Bind(0);
+        tex2->Bind(1);
+
+        // Projection Matrix
+        WindowSize wSize = window->GetSize();
+        glm::mat4  projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
+
+        shader->SetUniformMat4f("uMVP", projection);
+    }
+    void render() {
+        shader->SetUniform1i("u_Texture", 0);
+        renderer->Draw((*obj1).vao, (*obj1).ebo, *shader);
+
+        shader->SetUniform1i("u_Texture", 1);
+        renderer->Draw((*obj2).vao, (*obj2).ebo, *shader);
+    }
+    void stop() {
+        delete shader;
+
+        delete tex2, tex1;
+        delete obj2, obj1;
+
+        delete renderer;
+    }
+}
+
 int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
     Window window(1920,  1080, "Block Game", false, 3, 3);
 
-    // Create Vertex Buffer Layout
-    VertexBufferLayout layout;
-    layout.Push<GL_FLOAT>(2); // Position
-    layout.Push<GL_FLOAT>(2); // UV-Coord
-
-    // Creating Object
-    Object obj1(obj1_vertices, obj1_indices, sizeof(obj1_vertices), sizeof(obj1_indices), layout);
-    Object obj2(obj2_vertices, obj2_indices, sizeof(obj2_vertices), sizeof(obj2_indices), layout);
-    Texture texture1(RESOURCES_PATH "/logo.jpg");
-    Texture texture2(RESOURCES_PATH "/hello.png");
-    Shader shader(RESOURCES_PATH "/shader.glsl");
-
-    // Unbind everything & Clearing Errors
-    obj1.Unbind();
-    obj2.Unbind();
-    texture1.Unbind();
-    texture2.Unbind();
-    shader.Unbind();
-    GLClearError();
-
-    // Create Renderer
-    Renderer renderer;
-    renderer.SetBlendType(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
-    renderer.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
-    // Binding Texture
-    texture1.Bind(0);
-    texture2.Bind(1);
-
-    // Projection Matrix
-    WindowSize wSize = window.GetSize();
-    glm::mat4  projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
-    glm::vec4 vp(100.0f, 100.0f, 0.0f, 1.0f);
-
-    shader.SetUniformMat4f("uMVP", projection);
-
+    App::setup(&window);
     while (!window.ShouldClose()) {
-        renderer.Clear();
-
-        shader.SetUniform1i("u_Texture", 0);
-        renderer.Draw(obj1.vao, obj1.ebo, shader);
-
-        shader.SetUniform1i("u_Texture", 1);
-        renderer.Draw(obj2.vao, obj2.ebo, shader);
+        App::renderer->Clear();
+        App::render();
 
         window.SwapBuffers();
         Window::PollEvents();
     }
+    App::stop();
 
     GLClearError();
     return 0;
