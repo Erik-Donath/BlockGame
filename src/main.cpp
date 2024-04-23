@@ -45,11 +45,6 @@ int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
     Window window(1920,  1080, "Block Game", true, 3, 3);
 
-    // Enabling Blending
-    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-    GLCall(glBlendEquation(GL_FUNC_ADD));
-    GLCall(glEnable(GL_BLEND));
-
     // Create Vertex Buffer Layout
     VertexBufferLayout layout;
     layout.Push<GL_FLOAT>(2); // Position
@@ -72,6 +67,7 @@ int main() {
 
     // Create Renderer
     Renderer renderer;
+    renderer.SetBlendType(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
     renderer.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     // Binding Texture

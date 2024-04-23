@@ -20,3 +20,9 @@ void Renderer::Draw(const VertexArray &vao, const IndexBuffer &ebo, const Shader
 
     GLCall(glDrawElements(GL_TRIANGLES, ebo.GetCount(), ebo.GetDataType(), nullptr));
 }
+
+void Renderer::SetBlendType(GLenum src, GLenum dst, GLenum func) const {
+    GLCall(glBlendFunc(src, dst));
+    GLCall(glBlendEquation(func));
+    GLCall(glEnable(GL_BLEND));
+}
