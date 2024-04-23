@@ -6,6 +6,9 @@
 #include "base/GFX.h"
 #include "base/Renderer.h"
 
+#include <imgui.h>
+#include "base/ImGui.h"
+
 float obj1_vertices[] = {
          400.0f,  400.0f, 1.0f, 1.0f,   // top right
          400.0f, 100.0f, 1.0f, 0.0f,  // bottom right
@@ -28,8 +31,9 @@ GLuint obj2_indices[] = {     // note that we start from 0
 };
 
 struct Object {
-    Object(const void* vertices, const void* indices, const size_t vsize, const size_t isize, const VertexBufferLayout& layout, const GLenum indexType = GL_UNSIGNED_INT):
-    vao(), vbo(vertices, vsize), ebo(indexType, indices, isize) {
+    Object(const void *vertices, const void *indices, const size_t vsize, const size_t isize,
+           const VertexBufferLayout &layout, const GLenum indexType = GL_UNSIGNED_INT) :
+            vao(), vbo(vertices, vsize), ebo(indexType, indices, isize) {
         vao.AddBuffer(vbo, layout);
     }
 
@@ -54,7 +58,6 @@ namespace App {
     Shader* shader;
 
     void setup(Window* window) {
-
         // Create Vertex Buffer Layout
         VertexBufferLayout layout;
         layout.Push<GL_FLOAT>(2); // Position
@@ -91,6 +94,13 @@ namespace App {
 
         shader->SetUniform1i("u_Texture", 1);
         renderer->Draw((*obj2).vao, (*obj2).ebo, *shader);
+
+        ImGuiIO& io = ImGui::GetIO();
+        ImGui::Begin("Application Info");
+        GLCall(ImGui::Text("OpenGL Version: %s", glGetString(GL_VERSION)));
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+        ImGui::End();
+
     }
     void stop() {
         delete shader;
@@ -107,13 +117,18 @@ int main() {
     Window window(1920,  1080, "Block Game", false, 3, 3);
 
     App::setup(&window);
+    IMGUI_Setup(window.GetHandle());
     while (!window.ShouldClose()) {
         App::renderer->Clear();
+        IMGUI_Render_BEFORE();
+
         App::render();
 
+        IMGUI_Render_AFTER();
         window.SwapBuffers();
         Window::PollEvents();
     }
+    IMGUI_Stop();
     App::stop();
 
     GLClearError();

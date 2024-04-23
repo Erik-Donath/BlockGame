@@ -36,6 +36,7 @@ add_executable(BlockGame
         src/base/Renderer.cpp
         src/gfx/Texture.cpp
         src/gfx/Texture.h
+        src/base/ImGui.h
 )
 
 # Resource directory

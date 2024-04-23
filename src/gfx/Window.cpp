@@ -70,6 +70,9 @@ Window::Window(int w, int h, const char *title, bool resizable, int gl_major, in
     GLClearError();
     GLCall(std::cout << "Info: Loaded OpenGL " << glGetString(GL_VERSION) << std::endl);
     GLCall(glViewport(0, 0, fbWidth, fbHeight));
+
+    // Set FSYNC
+    glfwSwapInterval(1);
 }
 
 Window::~Window() {
@@ -92,13 +95,13 @@ bool Window::ShouldClose() {
     return glfwWindowShouldClose(m_handle);
 }
 
-int Window::GetWidth() const {
+[[maybe_unused]] int Window::GetWidth() const {
     int width, height;
     glfwGetWindowSize(m_handle, &width, &height);
     return width;
 }
 
-int Window::GetHeight() const {
+[[maybe_unused]] int Window::GetHeight() const {
     int width, height;
     glfwGetWindowSize(m_handle, &width, &height);
     return height;

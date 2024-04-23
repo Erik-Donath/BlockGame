@@ -19,9 +19,13 @@ public:
     void SwapBuffers();
     bool ShouldClose();
 
-    int GetWidth() const;
-    int GetHeight() const;
-    WindowSize GetSize() const;
+    [[nodiscard]] int GetWidth() const;
+    [[nodiscard]] int GetHeight() const;
+    [[nodiscard]] WindowSize GetSize() const;
+
+    [[nodiscard]] inline GLFWwindow* GetHandle() const {
+        return m_handle;
+    }
 
 private:
     GLFWwindow* m_handle = nullptr;
