@@ -64,3 +64,7 @@ target_link_libraries(BlockGame stb)
 # GLM
 add_subdirectory("${Include_DIR}/glm")
 target_link_libraries(BlockGame glm)
+
+# DEAR IMGUI
+add_subdirectory("${Include_DIR}/imgui")
+target_link_libraries(BlockGame imgui)
