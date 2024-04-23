@@ -1,5 +1,8 @@
 #include <iostream>
 
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
+
 #include "base/GFX.h"
 #include "base/Renderer.h"
 
@@ -73,6 +76,10 @@ int main() {
     // Binding Texture
     texture1.Bind(0);
     texture2.Bind(1);
+
+    // Projection Matrix
+    glm::mat4  projection = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+    shader.SetUniformMat4f("uMVP", projection);
 
     while (!window.ShouldClose()) {
         renderer.Clear();
