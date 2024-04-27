@@ -1,8 +1,9 @@
 //
 // Created by erikd on 20.04.2024.
-//
+// Refactored by erikd on 27.04.2024.
 
 #pragma once
+#include "../../Defines.h"
 #include "GL.h"
 
 template <GLenum Buffer>
@@ -39,34 +40,13 @@ public:
         return m_size;
     }
 
-    [[nodiscard]] inline unsigned int GetGLId() {
+    [[nodiscard]] inline unsigned int GetGLId() const {
         return m_glId;
     }
-    [[nodiscard]] inline GLenum GetBufferType() {
+    [[nodiscard]] inline GLenum GetBufferType() const {
         return Buffer;
     }
 protected:
-    unsigned int m_glId;
+    uint32_t m_glId;
     size_t m_size;
-};
-
-class VertexBuffer: public GLBuffer<GL_ARRAY_BUFFER> {
-public:
-    explicit VertexBuffer(): GLBuffer<GL_ARRAY_BUFFER>() { }
-    VertexBuffer(const void* data, size_t size, GLenum usage=GL_STATIC_DRAW): GLBuffer<GL_ARRAY_BUFFER>(data, size, usage) { }
-};
-
-class IndexBuffer: public GLBuffer<GL_ELEMENT_ARRAY_BUFFER> {
-public:
-    explicit IndexBuffer(GLenum dataType): GLBuffer<GL_ELEMENT_ARRAY_BUFFER>(), m_dataType(dataType) { }
-    IndexBuffer(GLenum dataType, const void* data, size_t size, GLenum usage=GL_STATIC_DRAW): GLBuffer<GL_ELEMENT_ARRAY_BUFFER>(data, size, usage), m_dataType(dataType) { }
-
-    [[nodiscard]] inline size_t GetCount() const {
-        return m_size / GetSizeOfType(m_dataType);
-    }
-    [[nodiscard]] inline GLenum GetDataType() const {
-        return m_dataType;
-    }
-protected:
-    GLenum m_dataType;
 };

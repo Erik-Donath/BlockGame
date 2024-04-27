@@ -1,8 +1,9 @@
 //
 // Created by erikd on 21.04.2024.
-//
+// Refactored by erikd on 27.04.2024.
 
 #include <iostream>
+#include "../../Defines.h"
 #include "GL.h"
 
 static const char* GetErrorType(GLenum code) {
@@ -21,7 +22,7 @@ static const char* GetErrorType(GLenum code) {
     }
 }
 
-bool GLCheckError(const char* file, int line) {
+bool GLCheckError(const char* file, int32_t line) {
     bool any_errors = false;
     while (GLenum code = glGetError()) {
         std::cerr << "Error: GL " << code << ": " << GetErrorType(code) << " at " << file << ':' << line << std::endl;
@@ -47,7 +48,9 @@ size_t GetSizeOfType(GLenum type) {
         case GL_HALF_FLOAT_ARB: return sizeof(GLhalfARB);
         default: return 1;
     }
-    /* Not supported:
+}
+
+/* Types that GetSizeOfType does not supported:
      * GLchar
      * GLint64
      * GLuint64
@@ -62,7 +65,7 @@ size_t GetSizeOfType(GLenum type) {
      * GLclampd
      * GLDEBUGPROC
      * GLDEBUGPROCFunc
-     *
+
      * GLcharARB
      * GLint64EXT
      * GLuint64EXT
@@ -77,7 +80,6 @@ size_t GetSizeOfType(GLenum type) {
      * GLDEBUGPROCKHR
      * GLDEBUGPROCKHRFunc
      * makeGLDEBUGPROCKHR
-     *
-     * Types from various extensions.
-    */
-}
+
+     * [Types from various extensions]
+*/

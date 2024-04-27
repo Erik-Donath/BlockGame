@@ -1,10 +1,11 @@
 //
 // Created by erikd on 20.04.2024.
-//
+// Refactored by erikd on 27.04.2024.
 
 #pragma once
 #include "GL.h"
-#include "GLBuffer.h"
+#include "../../Defines.h"
+#include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
 class VertexArray {
@@ -16,10 +17,6 @@ public:
 
     void Bind() const;
     void Unbind() const;
-
-    explicit operator unsigned int() const {
-        return m_glId;
-    }
 private:
-    unsigned int m_glId;
+    uint32_t m_glId;
 };

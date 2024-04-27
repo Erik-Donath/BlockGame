@@ -1,6 +1,6 @@
 //
 // Created by erikd on 20.04.2024.
-//
+// Refactored by erikd on 27.04.2024.
 
 #include "GL.h"
 #include "VertexArray.h"
@@ -18,12 +18,12 @@ void VertexArray::AddBuffer(const VertexBuffer& vbo, const VertexBufferLayout &l
     Bind();
     vbo.Bind();
 
+    size_t offset = 0;
     const std::vector<VertexBufferElement> &elements = layout.GetElements();
-    unsigned long long int offset = 0;
     for(unsigned int i = 0; i < elements.size(); i++) {
         const VertexBufferElement& element = elements[i];
 
-        GLCall(glVertexAttribPointer(i, (int)element.count, element.type, element.normalized ? GL_TRUE : GL_FALSE, (int)layout.GetStride(), (const void*)offset));
+        GLCall(glVertexAttribPointer(i, (int32_t)element.count, element.type, element.normalized ? GL_TRUE : GL_FALSE, (int32_t)layout.GetStride(), (const void*)offset));
         GLCall(glEnableVertexAttribArray(i));
         offset += element.count * GetSizeOfType(element.type);
     }

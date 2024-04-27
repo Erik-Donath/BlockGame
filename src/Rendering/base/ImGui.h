@@ -1,17 +1,17 @@
 //
 // Created by erikd on 23.04.2024.
-//
+// Refactored by erikd on 27.04.2024.
 
 #pragma once
 
 #include <cstdio>
 
 #include <imgui.h>
-#include <GLFW/glfw3.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
+#include "GLFW/glfw3.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 
-void IMGUI_Setup(GLFWwindow* window) {
+void ImGUISetup(GLFWwindow* window) {
     const char* glsl_version = "#version 130";
 
     IMGUI_CHECKVERSION();
@@ -32,13 +32,13 @@ void IMGUI_Setup(GLFWwindow* window) {
     ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
-void IMGUI_Render_BEFORE() {
+void ImGUIBeforeRender() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-void IMGUI_Render_AFTER() {
+void ImGUIAfterRender() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -51,7 +51,7 @@ void IMGUI_Render_AFTER() {
     }
 }
 
-void IMGUI_Stop() {
+void ImGuiShutdown() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

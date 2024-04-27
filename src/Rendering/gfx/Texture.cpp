@@ -1,17 +1,19 @@
 //
 // Created by erikd on 22.04.2024.
-//
+// Refactored by erikd on 27.04.2024.
 
 #include <iostream>
-#include <stb/stb_image.h>
+#include "stb/stb_image.h"
 
 #include "GL.h"
 #include "Texture.h"
 
-static int s_maxTextureSlot = 0;
-Texture::Texture(const std::string& filepath): m_glId(0), m_width(0), m_height(0), m_BPP(1), m_localBuffer(nullptr), m_filepath(filepath) {
+static int32_t s_maxTextureSlot = 0;
+
+Texture::Texture(const std::string& filepath): m_glId(0), m_width(0), m_height(0), m_BPP(1), m_filepath(filepath) {
     stbi_set_flip_vertically_on_load(1);
-    m_localBuffer = stbi_load(filepath.c_str(), &m_width, &m_height, &m_BPP, 4);
+    unsigned char* m_localBuffer = stbi_load(filepath.c_str(), &m_width, &m_height, &m_BPP, 4);
+
     if(!m_localBuffer) {
         std::cerr << "Error: Failed to load file '" << filepath << '\'' << std::endl;
         return;
@@ -32,11 +34,12 @@ Texture::Texture(const std::string& filepath): m_glId(0), m_width(0), m_height(0
 
     GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_localBuffer));
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+
+    stbi_image_free(m_localBuffer);
 }
 
 Texture::~Texture() {
     GLCall(glDeleteTextures(1, &m_glId));
-    if(m_localBuffer) stbi_image_free(m_localBuffer);
 }
 
 void Texture::Bind(unsigned int slot) const {

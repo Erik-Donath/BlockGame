@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 project(BlockGame)
 
 ### Setup
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/bin)
@@ -19,24 +19,27 @@ add_executable(BlockGame
         src/main.cpp
 
         # GFX
-        src/gfx/GL.h
-        src/gfx/GL.cpp
-        src/gfx/Window.h
-        src/gfx/Window.cpp
-        src/gfx/GLBuffer.h
-        src/gfx/VertexArray.h
-        src/gfx/VertexArray.cpp
-        src/gfx/VertexBufferLayout.h
-        src/gfx/Shader.h
-        src/gfx/Shader.cpp
+        src/Rendering/GFX.h
+        src/Rendering/Base.h
+        src/Rendering/gfx/GL.h
+        src/Rendering/gfx/GL.cpp
+        src/Rendering/gfx/GLBuffer.h
+        src/Rendering/gfx/IndexBuffer.h
+        src/Rendering/gfx/VertexBuffer.h
+        src/Rendering/gfx/VertexArray.h
+        src/Rendering/gfx/VertexArray.cpp
+        src/Rendering/gfx/VertexBufferLayout.h
+        src/Rendering/gfx/Texture.h
+        src/Rendering/gfx/Texture.cpp
+        src/Rendering/gfx/Shader.h
+        src/Rendering/gfx/Shader.cpp
 
-        # Base
-        src/base/GFX.h
-        src/base/Renderer.h
-        src/base/Renderer.cpp
-        src/gfx/Texture.cpp
-        src/gfx/Texture.h
-        src/base/ImGui.h
+        src/Rendering/base/Renderer.h
+        src/Rendering/base/Renderer.cpp
+        src/Rendering/base/Window.h
+        src/Rendering/base/Window.cpp
+        src/Rendering/base/ImGui.h
+        src/Defines.h
 )
 
 # Resource directory

@@ -1,13 +1,10 @@
 #include <iostream>
+#include "Defines.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 
-#include "base/GFX.h"
-#include "base/Renderer.h"
-
-#include <imgui.h>
-#include "base/ImGui.h"
+#include "Rendering/Base.h"
 
 float obj1_vertices[] = {
          400.0f,  400.0f, 1.0f, 1.0f,   // top right
@@ -62,7 +59,6 @@ namespace App {
 
     glm::vec3 translation1;
     glm::vec3 translation2;
-    glm::mat4 model;
 
     void setup(Window* window) {
         // Create Vertex Buffer Layout
@@ -87,8 +83,8 @@ namespace App {
         tex2->Bind(1);
 
         // Projection Matrix
-        WindowSize wSize = window->GetSize();
-        projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
+        glm::ivec2 wSize = window->GetSize();
+        projection = glm::ortho(0.0f, (float)wSize.x, 0.0f, (float)wSize.y, -1.0f, 1.0f);
         view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
         translation1 = glm::vec3(200.0f, 200.0f, 0.0f);
         translation2 = glm::vec3(200.0f, 200.0f, 0.0f);
@@ -96,12 +92,12 @@ namespace App {
     void render() {
         glm::mat4 vp = projection * view;
 
-        shader->SetUniformMat4f("uMVP", vp * glm::translate(glm::mat4(1.0f), translation1));
-        shader->SetUniform1i("u_Texture", 0);
+        shader->SetMat4("uMVP", vp * glm::translate(glm::mat4(1.0f), translation1));
+        shader->SetSampler("u_Texture", 0);
         renderer->Draw((*obj1).vao, (*obj1).ebo, *shader);
 
-        shader->SetUniformMat4f("uMVP", vp * glm::translate(glm::mat4(1.0f), translation2));
-        shader->SetUniform1i("u_Texture", 1);
+        shader->SetMat4("uMVP", vp * glm::translate(glm::mat4(1.0f), translation2));
+        shader->SetSampler("u_Texture", 1);
         renderer->Draw((*obj2).vao, (*obj2).ebo, *shader);
 
         ImGuiIO& io = ImGui::GetIO();
@@ -137,21 +133,21 @@ namespace App {
 
 int main() {
     std::cout << "Info: Resources are loaded from '" << RESOURCES_PATH << '\'' << std::endl;
-    Window window(1920,  1080, "Block Game", false, 3, 3);
+    Window window("Block Game", glm::ivec2(1920,  1080), WindowProperties());
 
     App::setup(&window);
-    IMGUI_Setup(window.GetHandle());
+    ImGUISetup(window.GetHandle());
     while (!window.ShouldClose()) {
         App::renderer->Clear();
-        IMGUI_Render_BEFORE();
+        ImGUIBeforeRender();
 
         App::render();
 
-        IMGUI_Render_AFTER();
+        ImGUIAfterRender();
         window.SwapBuffers();
         Window::PollEvents();
     }
-    IMGUI_Stop();
+    ImGuiShutdown();
     App::stop();
 
     GLClearError();
