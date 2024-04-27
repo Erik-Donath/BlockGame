@@ -1,15 +1,15 @@
 //
-// Created by erikd on 23.04.2024.
-// Refactored by erikd on 27.04.2024.
-
-#pragma once
+// Created by erikd on 27.04.2024.
+//
 
 #include <cstdio>
-
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <imgui.h>
-#include "GLFW/glfw3.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+
+#include "ImGUI.h"
 
 void ImGUISetup(GLFWwindow* window) {
     const char* glsl_version = "#version 130";

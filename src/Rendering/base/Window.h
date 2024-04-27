@@ -9,11 +9,10 @@
 #include "../../Defines.h"
 
 struct WindowProperties {
-    bool resizable;
-    const bool GLcore;
     const int32_t GLmajor, GLminor;
+    const bool GLcore, GLcompat, resizable;
 
-    WindowProperties() : resizable(false), GLcore(true), GLmajor(3), GLminor(3) { }
+    explicit WindowProperties(bool resizable = false, int32_t major = 3, int32_t minor = 3, bool core = true, bool compat = false) : resizable(resizable), GLcore(core), GLmajor(major), GLminor(minor), GLcompat(compat) { }
 };
 
 class Window {

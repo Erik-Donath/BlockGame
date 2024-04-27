@@ -40,6 +40,7 @@ Window::Window(const char *title, glm::ivec2 size, const WindowProperties& prope
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, properties.GLmajor);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, properties.GLminor);
     glfwWindowHint(GLFW_OPENGL_PROFILE, properties.GLcore ? GLFW_OPENGL_CORE_PROFILE : GLFW_OPENGL_COMPAT_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, properties.GLcompat ? GLFW_TRUE : GLFW_FALSE);
     glfwWindowHint(GLFW_RESIZABLE, properties.resizable ? GLFW_TRUE : GLFW_FALSE);
 
     // Create Window
