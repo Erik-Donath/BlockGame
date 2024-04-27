@@ -57,6 +57,13 @@ namespace App {
     Texture* tex2;
     Shader* shader;
 
+    glm::mat4 projection;
+    glm::mat4 view;
+
+    glm::vec3 translation1;
+    glm::vec3 translation2;
+    glm::mat4 model;
+
     void setup(Window* window) {
         // Create Vertex Buffer Layout
         VertexBufferLayout layout;
@@ -81,17 +88,19 @@ namespace App {
 
         // Projection Matrix
         WindowSize wSize = window->GetSize();
-        glm::mat4 projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 200.0f, 0.0f));
-        glm::mat4 mvp = projection * view * model;
-
-        shader->SetUniformMat4f("uMVP", mvp);
+        projection = glm::ortho(0.0f, (float)wSize.w, 0.0f, (float)wSize.h, -1.0f, 1.0f);
+        view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
+        translation1 = glm::vec3(200.0f, 200.0f, 0.0f);
+        translation2 = glm::vec3(200.0f, 200.0f, 0.0f);
     }
     void render() {
+        glm::mat4 vp = projection * view;
+
+        shader->SetUniformMat4f("uMVP", vp * glm::translate(glm::mat4(1.0f), translation1));
         shader->SetUniform1i("u_Texture", 0);
         renderer->Draw((*obj1).vao, (*obj1).ebo, *shader);
 
+        shader->SetUniformMat4f("uMVP", vp * glm::translate(glm::mat4(1.0f), translation2));
         shader->SetUniform1i("u_Texture", 1);
         renderer->Draw((*obj2).vao, (*obj2).ebo, *shader);
 
@@ -101,8 +110,18 @@ namespace App {
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
         ImGui::End();
 
-        ImGui::Begin("Application Info 2");
-        ImGui::Text("Helklo");
+        ImGui::Begin("Inspector");
+
+        ImGui::PushID("Obj1");
+        ImGui::Text("Object 1");
+        ImGui::SliderFloat3("Translation", &translation1.x, 0.0f, 2000.0f);
+        ImGui::PopID();
+
+        ImGui::PushID("Obj2");
+        ImGui::Text("Object 2");
+        ImGui::SliderFloat3("Translation", &translation2.x, 0.0f, 2000.0f);
+        ImGui::PopID();
+
         ImGui::End();
 
     }
