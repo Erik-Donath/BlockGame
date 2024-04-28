@@ -4,9 +4,9 @@
 
 #pragma once
 #include <vector>
+#include "../Defines.h"
 
 #include "GL.h"
-#include "../Defines.h"
 #include "VertexBuffer.h"
 
 struct VertexBufferElement {

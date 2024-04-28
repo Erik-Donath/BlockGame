@@ -4,8 +4,6 @@
 
 #include <iostream>
 #include "stb/stb_image.h"
-
-#include "GL.h"
 #include "Texture.h"
 
 static int32_t s_maxTextureSlot = 0;

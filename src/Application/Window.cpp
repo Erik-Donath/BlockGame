@@ -3,10 +3,6 @@
 // Refactored by erikd on 27.04.2024.
 
 #include <iostream>
-
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
 #include "../Rendering/GL.h"
 #include "Window.h"
 

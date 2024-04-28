@@ -3,10 +3,11 @@
 // Refactored by erikd on 27.04.2024.
 
 #pragma once
-#include "GLFW/glfw3.h"
-#include "glm/glm.hpp"
-
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include "../Defines.h"
+
 
 struct WindowProperties {
     const int32_t GLmajor, GLminor;

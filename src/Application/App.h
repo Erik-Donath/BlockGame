@@ -2,11 +2,9 @@
 // Created by erikd on 27.04.2024.
 //
 #pragma once
-#include <glm/glm.hpp>
-#include "../Rendering/GL.h"
+
 #include "Window.h"
 #include "Renderer.h"
-
 #include "Scene.h"
 
 class App {

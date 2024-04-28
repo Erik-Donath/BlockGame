@@ -2,9 +2,7 @@
 // Created by erikd on 20.04.2024.
 // Refactored by erikd on 27.04.2024.
 
-#include "GL.h"
 #include "VertexArray.h"
-#include "VertexBufferLayout.h"
 
 VertexArray::VertexArray(): m_glId(0) {
     GLCall(glGenVertexArrays(1, &m_glId));

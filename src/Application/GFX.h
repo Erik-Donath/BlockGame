@@ -13,5 +13,4 @@
 
 #include "../Rendering/Shader.h"
 #include "../Rendering/VertexArray.h"
-
 #include "../Rendering/Texture.h"

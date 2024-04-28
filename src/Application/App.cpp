@@ -2,7 +2,8 @@
 // Created by erikd on 27.04.2024.
 //
 
-#include "../Rendering/GL.h"
+#include <glm/glm.hpp>
+
 #include "ImGUI.h"
 #include "App.h"
 

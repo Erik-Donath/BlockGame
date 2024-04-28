@@ -3,12 +3,8 @@
 // Refactored by erikd on 27.04.2024.
 
 #include <fstream>
-#include <string>
 #include <sstream>
-#include <unordered_map>
 #include <iostream>
-
-#include "GL.h"
 #include "Shader.h"
 
 Shader::Shader(const std::string& path): m_glId(0) {

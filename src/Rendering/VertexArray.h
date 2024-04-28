@@ -3,8 +3,9 @@
 // Refactored by erikd on 27.04.2024.
 
 #pragma once
-#include "GL.h"
 #include "../Defines.h"
+
+#include "GL.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 

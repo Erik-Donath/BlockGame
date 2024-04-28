@@ -5,7 +5,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 
-#include "../Application/GFX.h"
 #include "../Application/Window.h"
 #include "../Application/ImGUI.h"
 #include "../Application/Renderer.h"

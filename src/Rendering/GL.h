@@ -3,8 +3,8 @@
 // Refactored by erikd on 27.04.2024.
 
 #pragma once
-#include "glad/glad.h"
 #include "../Defines.h"
+#include "glad/glad.h"
 
 #define GLCall(func) func; GLCheckError(__FILE__, __LINE__)
 #define GLClearError() GLCheckError(__FILE__, __LINE__)

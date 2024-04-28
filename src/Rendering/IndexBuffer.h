@@ -3,7 +3,6 @@
 //
 
 #pragma once
-#include "../Defines.h"
 #include "GLBuffer.h"
 
 class IndexBuffer: public GLBuffer<GL_ELEMENT_ARRAY_BUFFER> {
