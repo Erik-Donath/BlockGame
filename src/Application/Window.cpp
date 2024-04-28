@@ -7,7 +7,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "../gfx/GL.h"
+#include "../Rendering/GL.h"
 #include "Window.h"
 
 static Window* window_instance = nullptr;

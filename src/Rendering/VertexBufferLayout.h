@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "GL.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "VertexBuffer.h"
 
 struct VertexBufferElement {

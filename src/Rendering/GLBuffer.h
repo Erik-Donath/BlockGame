@@ -3,7 +3,7 @@
 // Refactored by erikd on 27.04.2024.
 
 #pragma once
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "GL.h"
 
 template <GLenum Buffer>

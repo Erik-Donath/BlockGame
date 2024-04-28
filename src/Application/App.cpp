@@ -2,8 +2,8 @@
 // Created by erikd on 27.04.2024.
 //
 
-#include "../Rendering/gfx/GL.h"
-#include "../Rendering/base/ImGUI.h"
+#include "../Rendering/GL.h"
+#include "ImGUI.h"
 #include "App.h"
 
 void App::Run(Scene& scene) {
@@ -41,3 +41,4 @@ App::~App() {
     delete m_renderer;
     delete m_window;
 }
+// 1.164

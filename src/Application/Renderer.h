@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "../GFX.h"
+#include "GFX.h"
 
 class Renderer {
 public:

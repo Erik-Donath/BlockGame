@@ -2,7 +2,7 @@
 // Created by erikd on 21.04.2024.
 //
 
-#include "../GFX.h"
+#include "GFX.h"
 #include "Renderer.h"
 
 void Renderer::Clear() const {

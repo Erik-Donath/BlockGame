@@ -2,7 +2,7 @@
 // Created by erikd on 27.04.2024.
 //
 #pragma once
-#include "../Rendering/Base.h"
+#include "../Application/GFX.h"
 #include "../Application/Scene.h"
 
 class MainScene : public Scene {

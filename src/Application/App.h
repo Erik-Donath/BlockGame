@@ -3,9 +3,9 @@
 //
 #pragma once
 #include <glm/glm.hpp>
-#include "../Rendering/gfx/GL.h"
-#include "../Rendering/base/Window.h"
-#include "../Rendering/base/Renderer.h"
+#include "../Rendering/GL.h"
+#include "Window.h"
+#include "Renderer.h"
 
 #include "Scene.h"
 

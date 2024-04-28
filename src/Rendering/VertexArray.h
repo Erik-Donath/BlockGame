@@ -4,7 +4,7 @@
 
 #pragma once
 #include "GL.h"
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 

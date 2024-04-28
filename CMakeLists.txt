@@ -15,38 +15,38 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only" FORCE)
 
 ### Project Architecture
 add_executable(BlockGame
-        # Application
+        # Entry
+        src/Defines.h
         src/main.cpp
 
-        # GFX
-        src/Rendering/GFX.h
-        src/Rendering/Base.h
-        src/Rendering/gfx/GL.h
-        src/Rendering/gfx/GL.cpp
-        src/Rendering/gfx/GLBuffer.h
-        src/Rendering/gfx/IndexBuffer.h
-        src/Rendering/gfx/VertexBuffer.h
-        src/Rendering/gfx/VertexArray.h
-        src/Rendering/gfx/VertexArray.cpp
-        src/Rendering/gfx/VertexBufferLayout.h
-        src/Rendering/gfx/Texture.h
-        src/Rendering/gfx/Texture.cpp
-        src/Rendering/gfx/Shader.h
-        src/Rendering/gfx/Shader.cpp
-
-        src/Rendering/base/Renderer.h
-        src/Rendering/base/Renderer.cpp
-        src/Rendering/base/Window.h
-        src/Rendering/base/Window.cpp
-        src/Rendering/base/ImGUI.h
-        src/Defines.h
+        #Application
+        src/Application/GFX.h
+        src/Application/Renderer.h
+        src/Application/Renderer.cpp
+        src/Application/Window.h
+        src/Application/Window.cpp
+        src/Application/ImGUI.h
         src/Application/App.cpp
         src/Application/App.h
-        src/Rendering/base/ImGUI.cpp
+        src/Application/ImGUI.cpp
         src/Application/Scene.h
         src/Game/MainScene.cpp
         src/Game/MainScene.h
         src/Application/Scene.cpp
+
+        # GFX
+        src/Rendering/GL.h
+        src/Rendering/GL.cpp
+        src/Rendering/GLBuffer.h
+        src/Rendering/IndexBuffer.h
+        src/Rendering/VertexBuffer.h
+        src/Rendering/VertexArray.h
+        src/Rendering/VertexArray.cpp
+        src/Rendering/VertexBufferLayout.h
+        src/Rendering/Texture.h
+        src/Rendering/Texture.cpp
+        src/Rendering/Shader.h
+        src/Rendering/Shader.cpp
 )
 
 # Resource directory

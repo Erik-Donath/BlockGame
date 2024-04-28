@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "glm/glm.hpp"
 
 #include "GL.h"

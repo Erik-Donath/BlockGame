@@ -3,7 +3,7 @@
 // Refactored by erikd on 27.04.2024.
 
 #include <iostream>
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "GL.h"
 
 static const char* GetErrorType(GLenum code) {

@@ -5,7 +5,7 @@
 #pragma once
 #include <string>
 
-#include "../../Defines.h"
+#include "../Defines.h"
 #include "GL.h"
 
 class Texture {
