@@ -47,6 +47,8 @@ add_executable(BlockGame
         src/Rendering/Texture.cpp
         src/Rendering/Shader.h
         src/Rendering/Shader.cpp
+        src/Application/Camera.cpp
+        src/Application/Camera.h
 )
 
 # Resource directory

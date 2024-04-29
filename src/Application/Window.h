@@ -17,6 +17,7 @@ struct WindowProperties {
 };
 
 class Window {
+
 public:
     Window(const char *title, glm::ivec2 size, const WindowProperties& properties);
     ~Window();
@@ -24,6 +25,9 @@ public:
     static void PollEvents();
     void SwapBuffers();
     bool ShouldClose();
+
+    void SetFramebufferSizeCallback(GLFWframebuffersizefun func);
+    static void SetErrorCallback(GLFWerrorfun func);
 
     [[nodiscard]] glm::ivec2 GetSize() const;
     [[nodiscard]] int32_t GetWidth() const;

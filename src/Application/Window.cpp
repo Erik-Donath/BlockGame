@@ -23,7 +23,7 @@ Window::Window(const char *title, glm::ivec2 size, const WindowProperties& prope
     }
 
     // Setting Default GLFW Callbacks
-    glfwSetErrorCallback(GLFW_DefaultErrorCallback);
+    Window::SetErrorCallback(GLFW_DefaultErrorCallback);
 
     // Initialize GLFW
     if(!glfwInit()) {
@@ -48,7 +48,7 @@ Window::Window(const char *title, glm::ivec2 size, const WindowProperties& prope
     }
 
     // Setting Default Window Callbacks
-    glfwSetFramebufferSizeCallback(m_handle, GLFW_FramebufferSizeCallback);
+    SetFramebufferSizeCallback(GLFW_FramebufferSizeCallback);
 
     // Load OpenGL
     glfwMakeContextCurrent(m_handle);
@@ -95,20 +95,28 @@ bool Window::ShouldClose() {
     return glfwWindowShouldClose(m_handle);
 }
 
-[[maybe_unused]] int32_t Window::GetWidth() const {
-    glm::ivec2 size = GetSize();
-    return size.x;
+void Window::SetFramebufferSizeCallback(GLFWframebuffersizefun func) {
+    glfwSetFramebufferSizeCallback(m_handle, func);
 }
 
-[[maybe_unused]] int Window::GetHeight() const {
-    glm::ivec2 size = GetSize();
-    return size.y;
+void Window::SetErrorCallback(GLFWerrorfun func) {
+    glfwSetErrorCallback(func);
 }
 
 glm::ivec2 Window::GetSize() const {
     glm::ivec2 size;
     glfwGetWindowSize(m_handle, &size.x, &size.y);
     return size;
+}
+
+int32_t Window::GetWidth() const {
+    glm::ivec2 size = GetSize();
+    return size.x;
+}
+
+int Window::GetHeight() const {
+    glm::ivec2 size = GetSize();
+    return size.y;
 }
 
 Window *Window::GetInstance() {
