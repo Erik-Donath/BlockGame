@@ -49,6 +49,12 @@ add_executable(BlockGame
         src/Rendering/Shader.cpp
         src/Application/Camera.cpp
         src/Application/Camera.h
+        src/Render/GL.cpp
+        src/Render/GL.h
+        src/Render/VertexBuffer.h
+        src/Render/IndexBuffer.h
+        src/Render/VertexArray.h
+        src/Render/VertexArray.cpp
 )
 
 # Resource directory
