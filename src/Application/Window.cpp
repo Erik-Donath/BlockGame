@@ -56,7 +56,7 @@ Window::Window(const std::string &title, const glm::ivec2 &size, const WindowPro
     GLCall(glViewport(0, 0, frame_size.x, frame_size.y));
 
     // Set FSYNC
-    SetVSNC(true);
+    SetVSYNC(true);
 }
 
 Window::~Window() {

@@ -35,7 +35,7 @@ public:
         return glfwWindowShouldClose(m_handle);
     }
 
-    static inline void SetVSNC(bool enable) {
+    static inline void SetVSYNC(bool enable) {
         glfwSwapInterval(enable ? 1 : 0);
     }
     inline static void PollEvents() {

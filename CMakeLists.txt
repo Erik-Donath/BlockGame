@@ -39,6 +39,10 @@ add_executable(BlockGame
         src/Rendering/Texture.h
         src/Rendering/Texture.cpp
         src/Rendering/Renderer.h
+        src/Scene/Transform.h
+        src/Scene/Transform.cpp
+        src/Scene/Block.cpp
+        src/Scene/Block.h
 )
 
 # Resource directory
