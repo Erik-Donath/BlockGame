@@ -30,7 +30,7 @@ void Application::Application::Run() {
 
         GLCall(ImGui::Text("OpenGL Version: %s", glGetString(GL_VERSION)));
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-        
+
         ImGui::Text("Options");
         if(ImGui::Checkbox("VSNC", &vsnc)) {
             m_window->SetVSNC(vsnc);
