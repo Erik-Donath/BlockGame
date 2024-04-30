@@ -31,3 +31,9 @@ void VertexArray::AddBuffer(const VertexBuffer &buffer) const {
     }
     Unbind();
 }
+
+void VertexArray::AddBuffer(const IndexBuffer &buffer) const {
+    Bind();
+    buffer.Bind();
+    Unbind();
+}

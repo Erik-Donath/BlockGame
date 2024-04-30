@@ -5,6 +5,7 @@
 #pragma once
 #include "GL.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 namespace Rendering {
     struct VertexArray {
@@ -12,6 +13,7 @@ namespace Rendering {
         VertexArray();
         ~VertexArray();
         void AddBuffer(const VertexBuffer &buffer) const;
+        void AddBuffer(const IndexBuffer &buffer)  const;
 
         inline void Bind() const {
             GLCall(glBindVertexArray(m_id));

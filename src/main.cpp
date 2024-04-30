@@ -1,15 +1,11 @@
 #include <iostream>
 #include "Defines.h"
 
-#include "Application/App.h"
-#include "Game/MainScene.h"
+#include "Application/Application.h"
 
 int main() {
-    App app;
-    auto* start = new MainScene();
+    Application::Application app;
+    app.Run();
 
-    app.Run(*start);
-
-    delete start;
     return 0;
 }

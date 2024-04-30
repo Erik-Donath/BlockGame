@@ -1,107 +1,71 @@
 //
-// Created by erikd on 20.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
 #include <iostream>
 #include "../Rendering/GL.h"
 #include "Window.h"
 
-using namespace Rendering;
-static Window* window_instance = nullptr;
+u32 Window::s_windowCount = 0;
 
-static void GLFW_DefaultErrorCallback(int error, const char* description_utf8) {
+void Window::DefaultErrorCallback(i32 error, cstr description_utf8) {
     std::cerr << "Error: GLFW " << error << ": " << description_utf8 << std::endl;
 }
-
-static void GLFW_FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
+void Window::DefaultFramebufferSizeCallback(GLFWwindow* window, i32 width, i32 height) {
     GLCall(glViewport(0, 0, width, height));
 }
 
-Window::Window(const char *title, glm::ivec2 size, const WindowProperties& properties) {
-    if(window_instance) {
-        std::cerr << "Error: The Window class is a singleton." << std::endl;
-        return;
+Window::Window(const std::string &title, const glm::ivec2 &size, const WindowProperties &properties) {
+    if(!s_windowCount) {
+        glfwSetErrorCallback(Window::DefaultErrorCallback);
+        if(!glfwInit()) {
+            std::cerr << "Error: Failed to initialize GLFW" << std::endl;
+            m_handle = nullptr;
+            return;
+        }
     }
+    s_windowCount += 1;
 
-    // Setting Default GLFW Callbacks
-    Window::SetErrorCallback(GLFW_DefaultErrorCallback);
-
-    // Initialize GLFW
-    if(!glfwInit()) {
-        m_handle = nullptr;
-        std::cerr << "Error: Failed to initialize GLFW" << std::endl;
-        return;
-    }
-
-    // Settings
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, properties.GLmajor);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, properties.GLminor);
     glfwWindowHint(GLFW_OPENGL_PROFILE, properties.GLcore ? GLFW_OPENGL_CORE_PROFILE : GLFW_OPENGL_COMPAT_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, properties.GLcompat ? GLFW_TRUE : GLFW_FALSE);
     glfwWindowHint(GLFW_RESIZABLE, properties.resizable ? GLFW_TRUE : GLFW_FALSE);
 
-    // Create Window
-    m_handle = glfwCreateWindow(size.x, size.y, title, nullptr, nullptr);
+    m_handle = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
     if(!m_handle) {
-        glfwTerminate();
         std::cerr << "Error: Failed to create Window" << std::endl;
         return;
     }
 
-    // Setting Default Window Callbacks
-    SetFramebufferSizeCallback(GLFW_FramebufferSizeCallback);
+    // Default Callbacks
+    glfwSetFramebufferSizeCallback(m_handle, Window::DefaultFramebufferSizeCallback);
 
-    // Load OpenGL
     glfwMakeContextCurrent(m_handle);
     int glVersion = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     if(!glVersion) {
-        glfwDestroyWindow(m_handle);
-        glfwTerminate();
         std::cerr << "Error: Failed to initialize OpenGL context" << std::endl;
+        glfwDestroyWindow(m_handle);
         return;
     }
 
-    // Setting Singleton value & Updating getting Framebuffer Size
-    window_instance = this;
-    glm::ivec2 frame_size;
-    glfwGetFramebufferSize(m_handle, &frame_size.x, &frame_size.y);
-
     // Clearing Errors, Setting Viewport and Print Open GL Version
     GLClearError();
+    glm::ivec2 frame_size = GetFrameSize();
     GLCall(std::cout << "Info: Loaded OpenGL " << glGetString(GL_VERSION) << std::endl);
     GLCall(glViewport(0, 0, frame_size.x, frame_size.y));
 
     // Set FSYNC
-    glfwSwapInterval(1);
+    SetVSNC(true);
 }
 
 Window::~Window() {
-    if(window_instance == this) {
-        glfwDestroyWindow(m_handle);
+    glfwDestroyWindow(m_handle);
+
+    s_windowCount -= 1;
+    if(!s_windowCount) {
         glfwTerminate();
-        window_instance = nullptr;
     }
-}
-
-
-void Window::PollEvents() {
-    glfwPollEvents();
-}
-
-void Window::SwapBuffers() {
-    glfwSwapBuffers(m_handle);
-}
-
-bool Window::ShouldClose() {
-    return glfwWindowShouldClose(m_handle);
-}
-
-void Window::SetFramebufferSizeCallback(GLFWframebuffersizefun func) {
-    glfwSetFramebufferSizeCallback(m_handle, func);
-}
-
-void Window::SetErrorCallback(GLFWerrorfun func) {
-    glfwSetErrorCallback(func);
 }
 
 glm::ivec2 Window::GetSize() const {
@@ -110,16 +74,8 @@ glm::ivec2 Window::GetSize() const {
     return size;
 }
 
-int32_t Window::GetWidth() const {
-    glm::ivec2 size = GetSize();
-    return size.x;
-}
-
-int Window::GetHeight() const {
-    glm::ivec2 size = GetSize();
-    return size.y;
-}
-
-Window *Window::GetInstance() {
-    return window_instance;
+glm::ivec2 Window::GetFrameSize() const {
+    glm::ivec2 size;
+    glfwGetFramebufferSize(m_handle, &size.x, &size.y);
+    return size;
 }
