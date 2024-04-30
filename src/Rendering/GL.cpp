@@ -1,11 +1,35 @@
 //
-// Created by erikd on 21.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
 #include <iostream>
 #include "GL.h"
 
-static const char* GetErrorType(GLenum code) {
+void Rendering::GLCheckError(cstr file, u32 line) {
+    while (GLenum code = glGetError()) {
+        std::cerr << "Error: GL " << code << ": " << GetErrorType(code) << " at " << file << ':' << line << std::endl;
+    }
+}
+
+size_t Rendering::GetSizeOfType(GLenum type) {
+    switch (type) {
+        case GL_BOOL: return sizeof(GLboolean);
+        case GL_BYTE: return sizeof(GLbyte);
+        case GL_UNSIGNED_BYTE: return sizeof(GLubyte);
+        case GL_SHORT: return sizeof(GLshort);
+        case GL_UNSIGNED_SHORT: return sizeof(GLushort);
+        case GL_INT: return sizeof(GLint);
+        case GL_UNSIGNED_INT: return sizeof(GLuint);
+        case GL_FIXED: return sizeof(GLfixed);
+        case GL_FLOAT: return sizeof(GLfloat);
+        case GL_DOUBLE: return sizeof(GLdouble);
+
+        case GL_HALF_FLOAT_ARB: return sizeof(GLhalfARB);
+        default: return 1;
+    }
+}
+
+cstr Rendering::GetErrorType(GLenum code) {
     switch (code) {
         case GL_NO_ERROR:                       return "GL_NO_ERROR";
         case GL_INVALID_ENUM:                   return "GL_INVALID_ENUM";
@@ -21,31 +45,11 @@ static const char* GetErrorType(GLenum code) {
     }
 }
 
-bool GLCheckError(const char* file, int32_t line) {
-    bool any_errors = false;
-    while (GLenum code = glGetError()) {
-        std::cerr << "Error: GL " << code << ": " << GetErrorType(code) << " at " << file << ':' << line << std::endl;
-        any_errors = true;
-    }
-
-    return any_errors;
-}
-
-size_t GetSizeOfType(GLenum type) {
+cstr Rendering::GetShaderType(GLenum type) {
     switch (type) {
-        case GL_BOOL: return sizeof(GLboolean);
-        case GL_BYTE: return sizeof(GLbyte);
-        case GL_UNSIGNED_BYTE: return sizeof(GLubyte);
-        case GL_SHORT: return sizeof(GLshort);
-        case GL_UNSIGNED_SHORT: return sizeof(GLushort);
-        case GL_INT: return sizeof(GLint);
-        case GL_UNSIGNED_INT: return sizeof(GLuint);
-        case GL_FIXED: return sizeof(GLfixed);
-        case GL_FLOAT: return sizeof(GLfloat);
-        case GL_DOUBLE: return sizeof(GLdouble);
-
-        case GL_HALF_FLOAT_ARB: return sizeof(GLhalfARB);
-        default: return 1;
+        case GL_VERTEX_SHADER: return "vertex";
+        case GL_FRAGMENT_SHADER: return "fragment";
+        default: return "unknown";
     }
 }
 

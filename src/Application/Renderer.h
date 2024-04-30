@@ -9,7 +9,7 @@ class Renderer {
 public:
     void Clear() const;
     void ClearColor(float r = 0.2f, float g = 0.3f, float b = 0.3f, float a = 1.0f) const;
-    void Draw(const VertexArray& vao, const IndexBuffer& ebo, const Shader& shader) const;
+    void Draw(const Rendering::VertexArray& vao, const Rendering::IndexBuffer& ebo, const Rendering::Shader& shader) const;
 
     void SetBlendType(GLenum src, GLenum dst, GLenum func) const;
 private:

@@ -6,11 +6,9 @@
 
 #include "../Rendering/GL.h"
 
-#include "../Rendering/GLBuffer.h"
 #include "../Rendering/IndexBuffer.h"
 #include "../Rendering/VertexBuffer.h"
-#include "../Rendering/VertexBufferLayout.h"
+#include "../Rendering/VertexArray.h"
 
 #include "../Rendering/Shader.h"
-#include "../Rendering/VertexArray.h"
 #include "../Rendering/Texture.h"

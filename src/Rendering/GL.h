@@ -1,13 +1,29 @@
 //
-// Created by erikd on 20.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
 #pragma once
+#include <glad/glad.h>
 #include "../Defines.h"
-#include "glad/glad.h"
 
-#define GLCall(func) func; GLCheckError(__FILE__, __LINE__)
-#define GLClearError() GLCheckError(__FILE__, __LINE__)
-bool GLCheckError(const char* file, int32_t line);
+//#define GL_Above46 // Falls das Projekt OpenGL Version 4.6 oder höher verwendet, können andere Funktionen genutzt werden.
 
-size_t GetSizeOfType(GLenum type);
+namespace Rendering {
+    typedef u32 glid;
+
+    void GLCheckError(cstr file, u32 line);
+
+    size_t GetSizeOfType(GLenum type);
+
+    cstr GetErrorType(GLenum code);
+
+    cstr GetShaderType(GLenum type);
+}
+
+#ifndef GL_Above46
+#define GLCall(func) func; Rendering::GLCheckError(__FILE__, __LINE__)
+#define GLClearError() Rendering::GLCheckError(__FILE__, __LINE__)
+#else
+#define GLCall(func) func
+#define GLClearError() Rendering::GLCheckError(__FILE__, __LINE__)
+#endif

@@ -1,39 +1,55 @@
 //
-// Created by erikd on 22.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
 #pragma once
 #include <string>
-
-#include "../Defines.h"
+#include <glm/glm.hpp>
 #include "GL.h"
 
-class Texture {
-public:
-    explicit Texture(const std::string& filepath);
-    ~Texture();
+namespace Rendering {
+    class Texture {
+    public:
+        explicit Texture(const std::string &path);
 
-    void Bind(uint32_t slot = 0) const;
-    void Unbind() const;
+        ~Texture();
 
-    [[nodiscard]] inline uint32_t GetId() const {
-        return m_glId;
-    }
-    [[nodiscard]] inline uint32_t GetWidth() const {
-        return m_width;
-    }
-    [[nodiscard]] inline uint32_t GetHeight() const {
-        return m_height;
-    }
-    [[nodiscard]] inline uint32_t GetBPP() const {
-        return m_BPP;
-    }
-    [[nodiscard]] inline std::string GetFilepath() const {
-        return m_filepath;
-    }
-private:
-    uint32_t m_glId;
+        void Bind(u32 slot = 0) const;
 
-    int32_t m_width, m_height, m_BPP;
-    std::string m_filepath;
-};
+        static void Unbind();
+
+        [[nodiscard]] inline uint32_t GetId() const {
+            return m_id;
+        }
+
+        [[nodiscard]] inline glm::ivec2 GetSize() const {
+            return m_size;
+        }
+
+        [[nodiscard]] inline uint32_t GetWidth() const {
+            return m_size.x;
+        }
+
+        [[nodiscard]] inline uint32_t GetHeight() const {
+            return m_size.y;
+        }
+
+        [[nodiscard]] inline uint32_t GetBPP() const {
+            return m_bpp;
+        }
+
+        [[nodiscard]] inline std::string GetPath() const {
+            return m_path;
+        }
+
+    protected:
+        glid m_id;
+
+        i32 m_bpp;
+        glm::ivec2 m_size;
+
+        std::string m_path;
+
+        static i32 s_max_slots;
+    };
+}

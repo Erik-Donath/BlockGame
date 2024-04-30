@@ -34,27 +34,16 @@ add_executable(BlockGame
         src/Game/MainScene.h
         src/Application/Scene.cpp
 
-        # GFX
         src/Rendering/GL.h
         src/Rendering/GL.cpp
-        src/Rendering/GLBuffer.h
-        src/Rendering/IndexBuffer.h
         src/Rendering/VertexBuffer.h
+        src/Rendering/IndexBuffer.h
         src/Rendering/VertexArray.h
         src/Rendering/VertexArray.cpp
-        src/Rendering/VertexBufferLayout.h
-        src/Rendering/Texture.h
-        src/Rendering/Texture.cpp
         src/Rendering/Shader.h
         src/Rendering/Shader.cpp
-        src/Application/Camera.cpp
-        src/Application/Camera.h
-        src/Render/GL.cpp
-        src/Render/GL.h
-        src/Render/VertexBuffer.h
-        src/Render/IndexBuffer.h
-        src/Render/VertexArray.h
-        src/Render/VertexArray.cpp
+        src/Rendering/Texture.h
+        src/Rendering/Texture.cpp
 )
 
 # Resource directory

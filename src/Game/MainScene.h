@@ -13,13 +13,13 @@ public:
     void Update() override;
     void Render(const Renderer& renderer) override;
 private:
-    VertexArray* obj1_vao = nullptr;
-    VertexArray* obj2_vao = nullptr;
-    IndexBuffer* ibo = nullptr;
+    Rendering::VertexArray* obj1_vao = nullptr;
+    Rendering::VertexArray* obj2_vao = nullptr;
+    Rendering::IndexBuffer* ibo = nullptr;
 
-    Texture* tex1 = nullptr;
-    Texture* tex2 = nullptr;
-    Shader* shader = nullptr;
+    Rendering::Texture* tex1 = nullptr;
+    Rendering::Texture* tex2 = nullptr;
+    Rendering::Shader* shader = nullptr;
 
     glm::mat4 projection;
     glm::mat4 view;

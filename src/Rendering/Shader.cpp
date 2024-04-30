@@ -1,101 +1,63 @@
 //
-// Created by erikd on 20.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 #include "Shader.h"
 
-Shader::Shader(const std::string& path): m_glId(0) {
-    ShaderSource source = ParseSourceFile(path);
+using namespace Rendering;
 
-    if(source.failed) return;
-    m_glId = CreateShaderProgram(source);
+static std::string ReadShaderFile(const std::string& path) {
+    std::ifstream file(path);
+    if(!file.is_open() || !file.good()) {
+        std::cerr << "Error: Can't read file '" << path << "'" << std::endl;
+        return "";
+    }
+
+    std::stringstream ss;
+    ss << file.rdbuf();
+    file.close();
+
+    return ss.str();
 }
 
-Shader::Shader(const ShaderSource& source): m_glId(0) {
-    m_glId = CreateShaderProgram(source);
+Shader::Shader(const std::string &vertex, const std::string &fragment): m_id(0) {
+    glid vertexShader = CompileShader(GL_VERTEX_SHADER, ReadShaderFile(vertex).c_str());
+    glid fragmentShader = CompileShader(GL_FRAGMENT_SHADER, ReadShaderFile(fragment).c_str());
+
+    if(!vertexShader || !fragmentShader) {
+        GLCall(glDeleteShader(vertexShader));
+        GLCall(glDeleteShader(fragmentShader));
+        m_id = 0;
+        return;
+    }
+
+    GLCall(m_id = glCreateProgram());
+    GLCall(glAttachShader(m_id, vertexShader));
+    GLCall(glAttachShader(m_id, fragmentShader));
+
+    GLCall(glLinkProgram(m_id));
+    GLCall(glValidateProgram(m_id));
+
+    GLCall(glDeleteShader(vertexShader));
+    GLCall(glDeleteShader(fragmentShader));
 }
 
 Shader::~Shader() {
-    GLCall(glDeleteProgram(m_glId));
+    GLCall(glDeleteProgram(m_id));
 }
 
-void Shader::Bind() const {
-    GLCall(glUseProgram(m_glId));
-}
+glid Shader::CompileShader(GLenum type, cstr source) {
+    GLCall(glid id = glCreateShader(type));
 
-void Shader::Unbind() const {
-    GLCall(glUseProgram(0));
-}
-
-int32_t Shader::GetUniformLocation(const std::string& name) {
-    if(m_uniformLocationCache.find(name) != m_uniformLocationCache.end())
-        return m_uniformLocationCache[name];
-
-    GLCall(int32_t location = glGetUniformLocation(m_glId, name.c_str()));
-    if(location == -1)
-        std::cout << "Warning: Uniform '" << name << "' does not exist" << std::endl;
-
-    m_uniformLocationCache[name] = location;
-    return location;
-}
-
-ShaderSource Shader::ParseSourceFile(const std::string& filepath) {
-    std::ifstream stream(filepath);
-    if(stream.fail()) {
-        std::cerr << "Error: Failed to open file '" << filepath << "'" << std::endl;
-        return {"", "", true};
-    }
-
-    uint32_t shaderType = -1;
-    std::stringstream source[2];
-
-    std::string line;
-    while (std::getline(stream, line)) {
-        if(line.rfind("#shader ", 0) == 0) {
-            if(line == "#shader none") shaderType = -1;
-            if(line == "#shader vertex") shaderType = 0;
-            if(line == "#shader fragment") shaderType = 1;
-            continue;
-        }
-
-        if(shaderType > 1) continue;
-        source[shaderType] << line << '\n';
-    }
-    return { source[0].str(), source[1].str(), false };
-}
-
-uint32_t Shader::CreateShaderProgram(const ShaderSource& source) {
-    uint32_t vertexShaderId = CompileShader(GL_VERTEX_SHADER, source.vertexSource.c_str());
-    uint32_t fragmentShaderId = CompileShader(GL_FRAGMENT_SHADER, source.fragmentSource.c_str());
-
-    if(!vertexShaderId || !fragmentShaderId) {
-        return 0;
-    }
-
-    GLCall(uint32_t id = glCreateProgram());
-    GLCall(glAttachShader(id, vertexShaderId));
-    GLCall(glAttachShader(id, fragmentShaderId));
-
-    GLCall(glLinkProgram(id));
-    GLCall(glValidateProgram(id));
-
-    GLCall(glDeleteShader(vertexShaderId));
-    GLCall(glDeleteShader(fragmentShaderId));
-
-    return id;
-}
-
-uint32_t Shader::CompileShader(GLenum type, const char* src) {
-    GLCall(uint32_t id = glCreateShader(type));
-
-    GLCall(glShaderSource(id, 1, &src, nullptr));
+    GLCall(glShaderSource(id, 1, &source, nullptr));
     GLCall(glCompileShader(id));
 
     int32_t success;
     GLCall(glGetShaderiv(id, GL_COMPILE_STATUS, &success));
+
     if(!success) {
         int32_t length;
         GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
@@ -103,7 +65,7 @@ uint32_t Shader::CompileShader(GLenum type, const char* src) {
         char* msg = new char[length];
         GLCall(glGetShaderInfoLog(id, length, &length, msg));
 
-        std::cerr << "Error: Failed to compile " << GetNameOfType(type) << " Shader: " << std::endl << msg << std::endl;
+        std::cerr << "Error: Failed to compile " << GetShaderType(type) << " Shader: " << std::endl << msg << std::endl;
         delete[] msg;
 
         GLCall(glDeleteShader(id));
@@ -112,41 +74,44 @@ uint32_t Shader::CompileShader(GLenum type, const char* src) {
     return id;
 }
 
-const char* Shader::GetNameOfType(GLenum type) {
-    switch (type) {
-        case GL_VERTEX_SHADER: return "vertex";
-        case GL_FRAGMENT_SHADER: return "fragment";
-        default: return "unknown";
-    }
+i32 Shader::GetLocation(const std::string &name) {
+    if(m_id == 0)
+        return -1;
+    if(m_locations.find(name) != m_locations.end())
+        return m_locations[name];
+
+    GLCall(i32 location = glGetUniformLocation(m_id, name.c_str()));
+    if(location == -1) std::cout << "Warning: Uniform '" << name << "' does not exist" << std::endl;
+
+    m_locations[name] = location;
+    return location;
 }
 
 void Shader::SetInt(const std::string &name, int32_t v0) {
     Bind();
-    GLCall(glUniform1i(GetUniformLocation(name), v0));
+    GLCall(glUniform1i(GetLocation(name), v0));
 }
 void Shader::SetFloat(const std::string &name, float v0) {
     Bind();
-    GLCall(glUniform1f(GetUniformLocation(name), v0));
+    GLCall(glUniform1f(GetLocation(name), v0));
 }
-
 void Shader::SetVec1(const std::string &name, glm::vec1 v) {
     Bind();
-    GLCall(glUniform1fv(GetUniformLocation(name), 1, &v.x));
+    GLCall(glUniform1fv(GetLocation(name), 1, &v.x));
 }
 void Shader::SetVec2(const std::string &name, glm::vec2 v) {
     Bind();
-    GLCall(glUniform2fv(GetUniformLocation(name), 1, &v.x));
+    GLCall(glUniform2fv(GetLocation(name), 1, &v.x));
 }
 void Shader::SetVec3(const std::string &name, glm::vec3 v) {
     Bind();
-    GLCall(glUniform3fv(GetUniformLocation(name), 1, &v.x));
+    GLCall(glUniform3fv(GetLocation(name), 1, &v.x));
 }
 void Shader::SetMat4(const std::string &name, glm::mat4 m) {
     Bind();
-    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &m[0][0]));
+    GLCall(glUniformMatrix4fv(GetLocation(name), 1, GL_FALSE, &m[0][0]));
 }
-
 void Shader::SetSampler(const std::string& name, int32_t s) {
     Bind();
-    GLCall(glUniform1i(GetUniformLocation(name), s));
+    GLCall(glUniform1i(GetLocation(name), s));
 }

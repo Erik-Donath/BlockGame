@@ -4,6 +4,8 @@
 
 #include "Renderer.h"
 
+using namespace Rendering;
+
 void Renderer::Clear() const {
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
@@ -17,7 +19,7 @@ void Renderer::Draw(const VertexArray &vao, const IndexBuffer &ebo, const Shader
     ebo.Bind();
     shader.Bind();
 
-    GLCall(glDrawElements(GL_TRIANGLES, ebo.GetCount(), ebo.GetDataType(), nullptr));
+    GLCall(glDrawElements(GL_TRIANGLES, ebo.GetCount(), ebo.GetType(), nullptr));
 }
 
 void Renderer::SetBlendType(GLenum src, GLenum dst, GLenum func) const {

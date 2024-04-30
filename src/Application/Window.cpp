@@ -6,6 +6,7 @@
 #include "../Rendering/GL.h"
 #include "Window.h"
 
+using namespace Rendering;
 static Window* window_instance = nullptr;
 
 static void GLFW_DefaultErrorCallback(int error, const char* description_utf8) {

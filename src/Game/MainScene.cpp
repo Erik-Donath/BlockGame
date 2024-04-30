@@ -8,6 +8,7 @@
 #include "../Application/Window.h"
 #include "../Application/ImGUI.h"
 #include "../Application/Renderer.h"
+#include "../Rendering/GL.h"
 #include "MainScene.h"
 
 void MainScene::Init(const Window& window) {
@@ -28,24 +29,30 @@ void MainScene::Init(const Window& window) {
             1, 2, 3    // second triangle
     };
 
-    obj1_vao = new VertexArray();
-    obj2_vao = new VertexArray();
+    obj1_vao = new Rendering::VertexArray();
+    obj2_vao = new Rendering::VertexArray();
 
-    VertexBuffer obj1_vbo(obj1_vertices, sizeof(obj1_vertices));
-    VertexBuffer obj2_vbo(obj2_vertices, sizeof(obj2_vertices));
+    Rendering::VertexBuffer obj1_vbo(obj1_vertices, sizeof(obj1_vertices));
+    Rendering::VertexBuffer obj2_vbo(obj2_vertices, sizeof(obj2_vertices));
 
-    VertexBufferLayout layout;
-    layout.Push<GL_FLOAT>(2); // Position
-    layout.Push<GL_FLOAT>(2); // UV-Coord
+    //VertexBufferLayout layout;
+    //layout.Push<GL_FLOAT>(2); // Position
+    //layout.Push<GL_FLOAT>(2); // UV-Coord
 
-    obj1_vao->AddBuffer(obj1_vbo, layout);
-    obj2_vao->AddBuffer(obj2_vbo, layout);
+    std::vector<Rendering::VertexBufferElement> layout;
+    layout.emplace_back(GL_FLOAT, 2); // Position
+    layout.emplace_back(GL_FLOAT, 2); // UV-Coord
+    obj1_vbo.SetLayout(layout);
+    obj2_vbo.SetLayout(layout);
 
-    ibo = new IndexBuffer(GL_UNSIGNED_INT, indices, sizeof(indices));
+    obj1_vao->AddBuffer(obj1_vbo);
+    obj2_vao->AddBuffer(obj2_vbo);
 
-    tex1 = new Texture(RESOURCES_PATH "/logo.jpg");
-    tex2 = new Texture(RESOURCES_PATH "/hello.png");
-    shader = new Shader(RESOURCES_PATH "/shader.glsl");
+    ibo = new Rendering::IndexBuffer(GL_UNSIGNED_INT, indices, sizeof(indices));
+
+    tex1 = new Rendering::Texture(RESOURCES_PATH "/logo.jpg");
+    tex2 = new Rendering::Texture(RESOURCES_PATH "/hello.png");
+    shader = new Rendering::Shader(RESOURCES_PATH "/vertex-shader.glsl", RESOURCES_PATH "/fragment-shader.glsl");
 
     // Projection Matrix
     glm::ivec2 wSize = window.GetSize();

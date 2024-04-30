@@ -1,38 +1,33 @@
 //
-// Created by erikd on 20.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
 #include "VertexArray.h"
+using namespace Rendering;
 
-VertexArray::VertexArray(): m_glId(0) {
-    GLCall(glGenVertexArrays(1, &m_glId));
+VertexArray::VertexArray(): m_id(0) {
+    GLCall(glGenVertexArrays(1, &m_id));
 }
-
 VertexArray::~VertexArray() {
-    GLCall(glDeleteVertexArrays(1, &m_glId));
+    GLCall(glDeleteVertexArrays(1, &m_id));
 }
-
-void VertexArray::AddBuffer(const VertexBuffer& vbo, const VertexBufferLayout &layout) const {
+void VertexArray::AddBuffer(const VertexBuffer &buffer) const {
     Bind();
-    vbo.Bind();
+    buffer.Bind();
 
-    size_t offset = 0;
-    const std::vector<VertexBufferElement> &elements = layout.GetElements();
-    for(unsigned int i = 0; i < elements.size(); i++) {
-        const VertexBufferElement& element = elements[i];
+    size_t offset = 0, stride = 0;
+    const auto& elements = buffer.GetElements();
 
-        GLCall(glVertexAttribPointer(i, (int32_t)element.count, element.type, element.normalized ? GL_TRUE : GL_FALSE, (int32_t)layout.GetStride(), (const void*)offset));
+    for(auto& element : elements) {
+        stride += element.count * GetSizeOfType(element.type);
+    }
+
+    for(size_t i = 0; i < elements.size(); i++) {
+        const auto& element = elements[i];
+
+        GLCall(glVertexAttribPointer(i, (int32_t)element.count, element.type, element.normalized ? GL_TRUE : GL_FALSE, (int32_t)stride, (const void*)offset));
         GLCall(glEnableVertexAttribArray(i));
         offset += element.count * GetSizeOfType(element.type);
     }
     Unbind();
-}
-
-void VertexArray::Bind() const {
-    GLCall(glBindVertexArray(m_glId));
-}
-
-
-void VertexArray::Unbind() const {
-    GLCall(glBindVertexArray(0));
 }

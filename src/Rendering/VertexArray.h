@@ -1,23 +1,31 @@
 //
-// Created by erikd on 20.04.2024.
-// Refactored by erikd on 27.04.2024.
+// Created by erikd on 30.04.2024.
+//
 
 #pragma once
-#include "../Defines.h"
-
 #include "GL.h"
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
 
-class VertexArray {
-public:
-    VertexArray();
-    ~VertexArray();
+namespace Rendering {
+    struct VertexArray {
+    public:
+        VertexArray();
+        ~VertexArray();
+        void AddBuffer(const VertexBuffer &buffer) const;
 
-    void AddBuffer(const VertexBuffer& vbo, const VertexBufferLayout& layout) const;
+        inline void Bind() const {
+            GLCall(glBindVertexArray(m_id));
+        }
 
-    void Bind() const;
-    void Unbind() const;
-private:
-    uint32_t m_glId;
-};
+        static inline void Unbind() {
+            GLCall(glBindVertexArray(0));
+        }
+
+        [[nodiscard]] inline glid GetId() const {
+            return m_id;
+        }
+
+    protected:
+        glid m_id;
+    };
+}
