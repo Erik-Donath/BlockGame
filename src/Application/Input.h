@@ -7,7 +7,8 @@
 #include "Application.h"
 #include "../Defines.h"
 
-#define Key(x) GLFW_KEY_#x
+#define GKey GLFW_KEY_
+#define Key(s) GLFW_KEY_ ## s
 
 namespace Application {
     class Input {
