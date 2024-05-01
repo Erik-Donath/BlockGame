@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include <memory>
 #include "Window.h"
+#include "../Scene/Scene.h"
 
 namespace Application {
     class Application {
@@ -12,15 +12,22 @@ namespace Application {
         Application();
         ~Application();
 
-        void Run();
+        void Run(Scene* scene);
 
-        inline GLFWwindow* GetWindowHandle() {
+        [[nodiscard]] inline GLFWwindow* GetWindowHandle() const {
             return m_window->GetHandle();
         }
-
-    protected:
-        std::unique_ptr<Window> m_window;
+        [[nodiscard]] inline double GetDeltaTime() {
+            return m_deltaTime;
+        }
+        [[nodiscard]] inline static Application* GetInstance() {
+            return s_instance;
+        }
     private:
+        Window* m_window;
+        Scene* m_scene;
+        double m_deltaTime;
+
         static Application* s_instance;
     };
 }

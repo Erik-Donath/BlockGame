@@ -5,7 +5,9 @@
 
 int main() {
     Application::Application app;
-    app.Run();
+    auto* mainScene = new Scene();
+    app.Run(mainScene);
 
+    delete mainScene;
     return 0;
 }

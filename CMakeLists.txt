@@ -26,7 +26,7 @@ add_executable(BlockGame
         src/Application/Window.cpp
         src/Application/ImGUI.h
         src/Application/ImGUI.cpp
-
+        src/Application/Input.h
 
         src/Rendering/GL.h
         src/Rendering/GL.cpp
@@ -39,10 +39,13 @@ add_executable(BlockGame
         src/Rendering/Texture.h
         src/Rendering/Texture.cpp
         src/Rendering/Renderer.h
+        src/Game/Block.cpp
+        src/Game/Block.h
+
+        src/Scene/Scene.h
+        src/Scene/Scene.cpp
         src/Scene/Transform.h
         src/Scene/Transform.cpp
-        src/Scene/Block.cpp
-        src/Scene/Block.h
 )
 
 # Resource directory

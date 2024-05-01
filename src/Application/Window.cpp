@@ -6,7 +6,10 @@
 #include "../Rendering/GL.h"
 #include "Window.h"
 
+using namespace Application;
+
 u32 Window::s_windowCount = 0;
+bool Window::s_currentSwapInterval = false;
 
 void Window::DefaultErrorCallback(i32 error, cstr description_utf8) {
     std::cerr << "Error: GLFW " << error << ": " << description_utf8 << std::endl;
@@ -17,7 +20,7 @@ void Window::DefaultFramebufferSizeCallback(GLFWwindow* window, i32 width, i32 h
 
 Window::Window(const std::string &title, const glm::ivec2 &size, const WindowProperties &properties) {
     if(!s_windowCount) {
-        glfwSetErrorCallback(Window::DefaultErrorCallback);
+        SetErrorCallback(Window::DefaultErrorCallback);
         if(!glfwInit()) {
             std::cerr << "Error: Failed to initialize GLFW" << std::endl;
             m_handle = nullptr;
@@ -39,7 +42,7 @@ Window::Window(const std::string &title, const glm::ivec2 &size, const WindowPro
     }
 
     // Default Callbacks
-    glfwSetFramebufferSizeCallback(m_handle, Window::DefaultFramebufferSizeCallback);
+    SetFramebufferSizeCallback(Window::DefaultFramebufferSizeCallback);
 
     glfwMakeContextCurrent(m_handle);
     int glVersion = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
