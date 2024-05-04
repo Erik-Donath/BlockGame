@@ -16,6 +16,8 @@
 namespace Scene {
     struct SimpleTransform {
     public:
+        SimpleTransform() : m_position(0.0, 0.0, 0.0), m_rotation(0.0, 0.0, 0.0, 1.0), m_changed(true) { }
+
         inline void SetPosition(const glm::vec3& position) {
             m_position = position;
             m_changed = true;
@@ -46,17 +48,19 @@ namespace Scene {
         [[nodiscard]] inline glm::vec3 GetRotationEuler() const {
             return eulerAngles(m_rotation);
         }
-        [[nodiscard]] inline bool didValuesChange() const {
+        [[nodiscard]] inline bool DidValuesChange() const {
             return m_changed;
         }
     protected:
         glm::vec3 m_position;
         glm::quat m_rotation;
-        bool m_changed = true;
+        bool m_changed;
     };
 
     struct ObjectTransform : public SimpleTransform {
     public:
+        ObjectTransform(): SimpleTransform(), m_scale(1.0, 1.0, 1.0), m_modelMatrix(1.0) { }
+
         inline void SetScale(const glm::vec3& scale) {
             m_scale = scale;
             m_changed = true;

@@ -33,5 +33,8 @@ namespace Rendering {
         inline static void DisableBlending() {
             GLCall(glDisable(GL_BLEND));
         }
+        inline static void SetWireframeMode(bool enabled) {
+            glPolygonMode(GL_FRONT_AND_BACK, enabled ? GL_LINE : GL_FILL);
+        }
     };
 }
