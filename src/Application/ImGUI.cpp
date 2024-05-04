@@ -10,7 +10,11 @@
 
 #include "ImGUI.h"
 
+static bool s_imgui_loaded = false;
+
 void ImGUISetup(GLFWwindow* window) {
+    if(s_imgui_loaded) return;
+
     const char* glsl_version = "#version 130";
 
     IMGUI_CHECKVERSION();
@@ -29,6 +33,8 @@ void ImGUISetup(GLFWwindow* window) {
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    s_imgui_loaded = true;
 }
 
 void ImGUIBeforeRender() {
@@ -51,7 +57,10 @@ void ImGUIAfterRender() {
 }
 
 void ImGuiShutdown() {
+    if(!s_imgui_loaded) return;
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+
+    s_imgui_loaded = false;
 }

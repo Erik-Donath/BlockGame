@@ -33,7 +33,10 @@ Block::~Block() {
 void Block::Update(const double deltaTime) {
     double time = Application::Application::GetTime();
 
-    m_transform.SetRotationEuler(glm::vec3(time, time, time));
+    m_transform.SetRotationEuler(glm::vec3(time + 0, time + 1, time + 2));
+
+    double scale = 0.25 + ((sin(time) + 1.0) / 2.0) * 0.25;
+    m_transform.SetScale(glm::vec3(scale, scale, scale));
 }
 
 
