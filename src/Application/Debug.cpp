@@ -8,12 +8,31 @@
 
 #include "Debug.h"
 
-bool Application::Debug::s_vsync     = false;
-bool Application::Debug::s_wireframe = false;
+// Render Options
+static const char* renderOptions[] = {"Point", "Line", "Fill"};
+static byte GetOptionFromRenderMode(Rendering::RenderMode mode) {
+    switch (mode) {
+        case GL_POINT: return 0;
+        case GL_LINE: return 1;
+        case GL_FILL: return 2;
+        default: return 0;
+    }
+}
+static Rendering::RenderMode GetRenderModeFromOption(u8 id) {
+    switch (id) {
+        case 0: return Rendering::RenderMode::Point;
+        case 1: return Rendering::RenderMode::Line;
+        case 2: return Rendering::RenderMode::Fill;
+        default: return Rendering::RenderMode::Point;
+    }
+}
+
+bool Application::Debug::s_vsync = false;
+Rendering::RenderMode Application::Debug::s_renderMode = Rendering::RenderMode::Line;
 
 void Application::Debug::Setup() {
     Window::SetVSYNC(s_vsync);
-    Rendering::Renderer::SetWireframeMode(s_wireframe);
+    Rendering::Renderer::SetMode(s_renderMode);
 }
 
 void Application::Debug::Finalize() { }
@@ -29,7 +48,22 @@ void Application::Debug::Render(GLFWwindow *window) {
 
     ImGui::Text("Settings");
     if(ImGui::Checkbox("Vsync", &s_vsync)) Window::SetVSYNC(s_vsync);
-    if(ImGui::Checkbox("Wireframe", &s_wireframe)) Rendering::Renderer::SetWireframeMode(s_wireframe);
 
+    // Render Options
+    cstr currentRenderOption = renderOptions[GetOptionFromRenderMode(s_renderMode)];
+    if(ImGui::BeginCombo("Render Mode", currentRenderOption)) {
+        for(u8 i = 0; i < 3; i++) {
+            cstr option = renderOptions[i];
+            bool selected = (currentRenderOption == option);
+
+            if(ImGui::Selectable(option, selected)) {
+                s_renderMode = GetRenderModeFromOption(i);
+                Rendering::Renderer::SetMode(s_renderMode);
+            }
+
+            if(selected) ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
     ImGui::End();
 }

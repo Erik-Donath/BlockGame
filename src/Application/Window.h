@@ -51,7 +51,7 @@ namespace Application {
         inline static void SetErrorCallback(const GLFWerrorfun &callback) {
             glfwSetErrorCallback(callback);
         }
-        inline void SetFramebufferSizeCallback(const GLFWframebuffersizefun &callback) {
+        inline void SetFramebufferSizeCallback(const GLFWframebuffersizefun &callback) const {
             glfwSetFramebufferSizeCallback(m_handle, callback);
         }
         inline void SetKeyCallback(const GLFWkeyfun &callback) {

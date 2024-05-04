@@ -14,6 +14,9 @@ namespace Application {
 
         void Run(Scene::Scene* scene);
 
+        [[nodiscard]] inline Window* GetWindow() const {
+            return m_window;
+        }
         [[nodiscard]] inline GLFWwindow* GetWindowHandle() const {
             return m_window->GetHandle();
         }

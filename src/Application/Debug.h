@@ -3,8 +3,7 @@
 //
 
 #pragma once
-
-struct GLFWwindow;
+#include "../Rendering/Renderer.h"
 
 namespace Application {
     class Debug {
@@ -15,6 +14,6 @@ namespace Application {
         static void Render(GLFWwindow* window);
     private:
         static bool s_vsync;
-        static bool s_wireframe;
+        static Rendering::RenderMode s_renderMode;
     };
 }

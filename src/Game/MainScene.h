@@ -4,6 +4,7 @@
 
 #pragma once
 #include "../Scene/Scene.h"
+#include "../Scene/Camera.h"
 #include "Block.h"
 
 class MainScene: public Scene::Scene {
@@ -18,5 +19,6 @@ public:
 
 private:
     Block* m_block;
+    ::Scene::Camera* m_camera;
 };
 

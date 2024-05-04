@@ -16,27 +16,24 @@
 namespace Scene {
     struct SimpleTransform {
     public:
-        SimpleTransform() : m_position(0.0, 0.0, 0.0), m_rotation(0.0, 0.0, 0.0, 1.0), m_changed(true) { }
+        SimpleTransform() : m_position(0.0, 0.0, 0.0), m_rotation(0.0, 0.0, 0.0, 1.0), m_recalculate(true) { }
 
         inline void SetPosition(const glm::vec3& position) {
             m_position = position;
-            m_changed = true;
+            m_recalculate = true;
         }
         inline void SetRotation(const glm::quat& rotation) {
             m_rotation = rotation;
-            m_changed = true;
+            m_recalculate = true;
         }
         inline void SetRotationEuler(const glm::vec3& angles) {
             m_rotation = glm::quat(angles);
-            m_changed = true;
+            m_recalculate = true;
         }
         inline void SetValues(const glm::vec3& position, const glm::quat& rotation) {
             m_position = position;
             m_rotation = rotation;
-            m_changed = true;
-        }
-        inline void HandledChange() {
-            m_changed = false;
+            m_recalculate = true;
         }
 
         [[nodiscard]] inline glm::vec3 GetPosition() const {
@@ -48,13 +45,17 @@ namespace Scene {
         [[nodiscard]] inline glm::vec3 GetRotationEuler() const {
             return eulerAngles(m_rotation);
         }
-        [[nodiscard]] inline bool DidValuesChange() const {
-            return m_changed;
+
+        inline friend bool operator==(const SimpleTransform& first, const SimpleTransform& second) {
+            return first.m_position == second.m_position && first.m_rotation == second.m_rotation;
+        }
+        inline friend bool operator!=(const SimpleTransform& first, const SimpleTransform& second) {
+            return !(first == second);
         }
     protected:
         glm::vec3 m_position;
         glm::quat m_rotation;
-        bool m_changed;
+        bool m_recalculate; // Is only used in Object Transform at the moment
     };
 
     struct ObjectTransform : public SimpleTransform {
@@ -63,13 +64,20 @@ namespace Scene {
 
         inline void SetScale(const glm::vec3& scale) {
             m_scale = scale;
-            m_changed = true;
+            m_recalculate = true;
         }
 
         [[nodiscard]] inline glm::vec3 GetScale() const {
             return m_scale;
         }
         [[nodiscard]] glm::mat4 GetModelMatrix();
+
+        inline friend bool operator==(const ObjectTransform& first, const ObjectTransform& second) {
+            return first.m_position == second.m_position && first.m_rotation == second.m_rotation && first.m_scale == second.m_scale;
+        }
+        inline friend bool operator!=(const ObjectTransform& first, const ObjectTransform& second) {
+            return !(first == second);
+        }
     private:
         glm::vec3 m_scale;
         glm::mat4 m_modelMatrix;

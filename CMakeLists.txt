@@ -48,6 +48,8 @@ add_executable(BlockGame
         src/Scene/Scene.cpp
         src/Scene/Transform.h
         src/Scene/Transform.cpp
+        src/Scene/Camera.h
+        src/Scene/Camera.cpp
 
         # Game
         src/Game/MainScene.h

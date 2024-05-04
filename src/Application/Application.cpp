@@ -39,6 +39,7 @@ void Application::Application::Run(Scene::Scene* scene) {
     Rendering::Renderer::ClearColor(DefaultClearColor);
     Rendering::Renderer::SetBlendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
     Rendering::Renderer::EnableBlending();
+    Rendering::Renderer::SetMode(Rendering::RenderMode::Fill);
 
     double lastTime = glfwGetTime();
 

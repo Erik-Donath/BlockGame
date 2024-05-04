@@ -9,6 +9,12 @@
 #define DefaultClearColor glm::vec4(0.2f, 0.3f, 0.3f, 1.0f)
 
 namespace Rendering {
+    enum RenderMode: GLenum {
+        Point = GL_POINT,
+        Line = GL_LINE,
+        Fill = GL_FILL
+    };
+
     class Renderer {
     public:
         inline static void Clear() {
@@ -33,8 +39,8 @@ namespace Rendering {
         inline static void DisableBlending() {
             GLCall(glDisable(GL_BLEND));
         }
-        inline static void SetWireframeMode(bool enabled) {
-            glPolygonMode(GL_FRONT_AND_BACK, enabled ? GL_LINE : GL_FILL);
+        inline static void SetMode(RenderMode mode) {
+            glPolygonMode(GL_FRONT_AND_BACK, mode);
         }
     };
 }
