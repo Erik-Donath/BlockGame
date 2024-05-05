@@ -3,16 +3,16 @@
 //
 
 #pragma once
-#include "../Application/Window.h"
+#include "../App/Window.h"
 
-namespace Scene {
+namespace Engine::Scene {
     class Scene {
-        public:
+    public:
         virtual void Setup();
         virtual void Finalize();
 
         virtual void Update(double deltaTime);
-        virtual void Render(GLFWwindow* window);
+        virtual void Render(App::Window& window);
     };
 }
 

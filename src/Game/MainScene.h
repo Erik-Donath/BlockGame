@@ -3,11 +3,11 @@
 //
 
 #pragma once
-#include "../Scene/Scene.h"
-#include "../Scene/Camera.h"
+#include "../Engine/Scene/Scene.h"
+#include "../Engine/Scene/Camera.h"
 #include "Block.h"
 
-class MainScene: public Scene::Scene {
+class MainScene: public Engine::Scene::Scene {
 public:
     MainScene();
     ~MainScene();
@@ -15,7 +15,7 @@ public:
     void Setup() override;
     void Finalize() override;
     void Update(double deltaTime) override;
-    void Render(GLFWwindow* window) override;
+    void Render(Engine::App::Window& window) override;
 
 private:
     Block* m_block;

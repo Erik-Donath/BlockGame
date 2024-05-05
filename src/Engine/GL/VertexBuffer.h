@@ -6,7 +6,7 @@
 #include <vector>
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     struct VertexBufferElement {
         GLenum type;
         u32 count;
@@ -21,12 +21,10 @@ namespace Rendering {
             GLCall(glGenBuffers(1, &m_id));
             Bind();
         }
-
         inline VertexBuffer(void *data, size_t size, GLenum usage = GL_STATIC_DRAW) : m_id(0), m_size(0) {
             GLCall(glGenBuffers(1, &m_id));
             SetData(data, size, usage);
         }
-
         inline  ~VertexBuffer() {
             GLCall(glDeleteBuffers(1, &m_id));
         }
@@ -40,7 +38,6 @@ namespace Rendering {
         inline void Bind() const {
             GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_id));
         }
-
         static inline void Unbind() {
             GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
         }
@@ -49,20 +46,18 @@ namespace Rendering {
             m_elements = elements;
         }
 
-        [[nodiscard]] inline glid GetID() const {
+        [[nodiscard]] inline glId GetID() const {
             return m_id;
         }
-
         [[nodiscard]] inline size_t GetSize() const {
             return m_size;
         }
-
         [[nodiscard]] inline const std::vector<VertexBufferElement> &GetElements() const {
             return m_elements;
         }
 
-    protected:
-        glid m_id;
+    private:
+        glId m_id;
         size_t m_size;
         std::vector<VertexBufferElement> m_elements;
     };

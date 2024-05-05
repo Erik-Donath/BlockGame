@@ -4,10 +4,11 @@
 #pragma once
 #include <string>
 #include <unordered_map>
+
 #include <glm/glm.hpp>
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     class Shader {
     public:
         Shader(const std::string &vertex, const std::string &fragment);
@@ -25,19 +26,21 @@ namespace Rendering {
         inline void Bind() const {
             GLCall(glUseProgram(m_id));
         }
-
         static inline void Unbind() {
             GLCall(glUseProgram(0));
         }
-
         inline void Use() const {
             Bind();
         }
 
-    protected:
-        glid m_id;
+        inline glId getID() {
+            return m_id;
+        }
+
+    private:
+        glId m_id;
         std::unordered_map<std::string, i32> m_locations;
 
-        static glid CompileShader(GLenum type, cstr source);
+        static glId CompileShader(GLenum type, cstr source);
     };
 }

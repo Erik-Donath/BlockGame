@@ -5,15 +5,14 @@
 #pragma once
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     struct IndexBuffer {
     public:
         inline explicit IndexBuffer(GLenum type) : m_id(0), m_type(type), m_size(0) {
             GLCall(glGenBuffers(1, &m_id));
             Bind();
         }
-        inline IndexBuffer(GLenum type, void *data, size_t size, GLenum usage = GL_STATIC_DRAW) : m_id(0), m_type(type),
-                                                                                                  m_size(0) {
+        inline IndexBuffer(GLenum type, void *data, size_t size, GLenum usage = GL_STATIC_DRAW) : m_id(0), m_type(type), m_size(0) {
             GLCall(glGenBuffers(1, &m_id));
             SetData(data, size, usage);
         }
@@ -26,6 +25,7 @@ namespace Rendering {
             m_size = size;
             GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, usage));
         }
+
         inline void Bind() const {
             GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id));
         }
@@ -33,7 +33,7 @@ namespace Rendering {
             GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
         }
 
-        [[nodiscard]] inline glid GetID() const {
+        [[nodiscard]] inline glId GetID() const {
             return m_id;
         }
         [[nodiscard]] inline GLenum GetType() const {
@@ -43,10 +43,10 @@ namespace Rendering {
             return m_size;
         }
         [[nodiscard]] inline size_t GetCount() const {
-            return m_size / GetSizeOfType(m_type);
+            return m_size / GL::GetSizeOfType(m_type);
         }
-    protected:
-        glid m_id;
+    private:
+        glId m_id;
         GLenum m_type;
         size_t m_size;
     };
