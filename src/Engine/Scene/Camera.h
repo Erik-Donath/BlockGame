@@ -10,7 +10,6 @@
 namespace Engine::Scene {
     class Camera {
     public:
-        void Setup();
         void Update(double deltaTime);
 
         void RecalculateProjectionMatrix(glm::ivec2& frameBufferSize);
@@ -32,7 +31,7 @@ namespace Engine::Scene {
         float m_nearPlan = 0.1, m_farPlan = 100, m_fov = glm::half_pi<float>();
         float m_aspectRatio = 0;
 
-        glm::ivec2 m_pm_frameSize = { 0, 0 };
+        glm::ivec2 m_pm_frameSize = {0, 0 };
         WorldTransform m_vm_transform;
         bool m_recalculate_vp = true;
 

@@ -12,7 +12,7 @@ public:
     Block();
     ~Block();
 
-    void Update(double deltaTime);
+    void Update(const double deltaTime);
     void Render(const glm::mat4& vp);
 private:
     GL::VertexArray* m_vao;

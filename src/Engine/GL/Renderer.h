@@ -2,8 +2,6 @@
 // Created by erikd on 30.04.2024.
 //
 #pragma once
-#include <iostream>
-#define DebugLog
 #include <glm/glm.hpp>
 
 #include "VertexArray.h"

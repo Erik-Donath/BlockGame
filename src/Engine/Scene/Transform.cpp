@@ -1,8 +1,7 @@
 //
 // Created by erikd on 30.04.2024.
 //
-#define DebugLog
-#include "../../Defines.h"
+
 #include "Transform.h"
 using namespace Engine::Scene;
 
@@ -13,9 +12,9 @@ glm::mat4 WorldTransform::GetModelMatrix() {
         glm::mat4 scale = glm::scale(glm::mat4(1.0), m_scale);
 
         //m_modelMatrix = translate * rotate * scale;
-        m_modelMatrix = translate * glm::mat4_cast(glm::quat(0.0f, 0.0f, 0.0f, 1.0f)) * scale;
-
+        m_modelMatrix = translate * scale;
         m_updateMatrix = false;
     }
+
     return m_modelMatrix;
 }
