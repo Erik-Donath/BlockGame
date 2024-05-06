@@ -3,11 +3,10 @@
 //
 
 #include <iostream>
-
 #include <stb/stb_image.h>
 #include "Texture.h"
 
-using namespace Engine::GL;
+using namespace Rendering;
 
 int Texture::s_max_slots = 0;
 

@@ -20,43 +20,42 @@ add_executable(BlockGame
         src/main.cpp
 
         # Application
-        src/Engine/App/Application.h
-        src/Engine/App/Application.cpp
-        src/Engine/App/Window.h
-        src/Engine/App/Window.cpp
-        src/Engine/App/Input.h
-        src/Engine/App/Gui.h
-        src/Engine/App/Gui.cpp
-        src/Engine/Common/Debug.h
-        src/Engine/Common/Debug.cpp
+        src/Application/Application.h
+        src/Application/Application.cpp
+        src/Application/Window.h
+        src/Application/Window.cpp
+        src/Application/Input.h
+        src/Application/ImGUI.h
+        src/Application/ImGUI.cpp
+        src/Application/Debug.h
+        src/Application/Debug.cpp
 
         # Rendering
-        src/Engine/GL/GL.h
-        src/Engine/GL/GL.cpp
-        src/Engine/GL/VertexBuffer.h
-        src/Engine/GL/IndexBuffer.h
-        src/Engine/GL/VertexArray.h
-        src/Engine/GL/VertexArray.cpp
-        src/Engine/GL/Shader.h
-        src/Engine/GL/Shader.cpp
-        src/Engine/GL/Texture.h
-        src/Engine/GL/Texture.cpp
-        src/Engine/GL/Renderer.h
+        src/Rendering/GL.h
+        src/Rendering/GL.cpp
+        src/Rendering/VertexBuffer.h
+        src/Rendering/IndexBuffer.h
+        src/Rendering/VertexArray.h
+        src/Rendering/VertexArray.cpp
+        src/Rendering/Shader.h
+        src/Rendering/Shader.cpp
+        src/Rendering/Texture.h
+        src/Rendering/Texture.cpp
+        src/Rendering/Renderer.h
 
         # Scene
-        src/Engine/Scene/Scene.h
-        src/Engine/Scene/Scene.cpp
-        src/Engine/Scene/Transform.h
-        src/Engine/Scene/Transform.cpp
-        src/Engine/Scene/Camera.h
-        src/Engine/Scene/Camera.cpp
+        src/Scene/Scene.h
+        src/Scene/Scene.cpp
+        src/Scene/Transform.h
+        src/Scene/Transform.cpp
+        src/Scene/Camera.h
+        src/Scene/Camera.cpp
 
         # Game
         src/Game/MainScene.h
         src/Game/MainScene.cpp
         src/Game/Block.h
         src/Game/Block.cpp
-        src/Engine/App/Input.cpp
 
 )
 

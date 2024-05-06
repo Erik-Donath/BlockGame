@@ -7,7 +7,7 @@
 #include <sstream>
 #include "Shader.h"
 
-using namespace Engine::GL;
+using namespace Rendering;
 
 static std::string ReadShaderFile(const std::string& path) {
     std::ifstream file(path);
@@ -24,8 +24,8 @@ static std::string ReadShaderFile(const std::string& path) {
 }
 
 Shader::Shader(const std::string &vertex, const std::string &fragment): m_id(0) {
-    glId vertexShader   = CompileShader(GL_VERTEX_SHADER,   ReadShaderFile(vertex).c_str());
-    glId fragmentShader = CompileShader(GL_FRAGMENT_SHADER, ReadShaderFile(fragment).c_str());
+    glid vertexShader = CompileShader(GL_VERTEX_SHADER, ReadShaderFile(vertex).c_str());
+    glid fragmentShader = CompileShader(GL_FRAGMENT_SHADER, ReadShaderFile(fragment).c_str());
 
     if(!vertexShader || !fragmentShader) {
         GLCall(glDeleteShader(vertexShader));
@@ -49,8 +49,8 @@ Shader::~Shader() {
     GLCall(glDeleteProgram(m_id));
 }
 
-glId Shader::CompileShader(GLenum type, cstr source) {
-    GLCall(glId id = glCreateShader(type));
+glid Shader::CompileShader(GLenum type, cstr source) {
+    GLCall(glid id = glCreateShader(type));
 
     GLCall(glShaderSource(id, 1, &source, nullptr));
     GLCall(glCompileShader(id));
@@ -65,7 +65,7 @@ glId Shader::CompileShader(GLenum type, cstr source) {
         char* msg = new char[length];
         GLCall(glGetShaderInfoLog(id, length, &length, msg));
 
-        std::cerr << "Error: Failed to compile " << GL::GetShaderType(type) << " Shader: " << std::endl << msg << std::endl;
+        std::cerr << "Error: Failed to compile " << GetShaderType(type) << " Shader: " << std::endl << msg << std::endl;
         delete[] msg;
 
         GLCall(glDeleteShader(id));

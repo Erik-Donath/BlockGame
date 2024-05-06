@@ -17,8 +17,3 @@ typedef uint8_t  u8;
 
 typedef u8 byte;
 typedef const char* cstr;
-
-#ifdef DebugLog
-#include <iostream>
-#define Log(x) std::cout << x << std::endl
-#endif

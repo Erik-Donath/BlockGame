@@ -1,13 +1,14 @@
+#include <iostream>
 #include "Defines.h"
 
-#include "Engine/App/Application.h"
+#include "Application/Application.h"
 #include "Game/MainScene.h"
 
-#include "Engine/GL/GL.h"
-
 int main() {
-    Engine::App::Application app;
-    std::shared_ptr<Scene::Scene> mainScene = std::make_shared<MainScene>();
+    Application::Application app;
+    auto* mainScene = new MainScene();
     app.Run(mainScene);
+
+    delete mainScene;
     return 0;
 }

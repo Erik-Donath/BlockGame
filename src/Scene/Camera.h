@@ -3,17 +3,17 @@
 //
 #pragma once
 
-#include "glm/glm.hpp"
-#include "../App/Window.h"
+#include <glm/glm.hpp>
+#include "../Application/Window.h"
 #include "Transform.h"
 
-namespace Engine::Scene {
+namespace Scene {
     class Camera {
     public:
         void Update(double deltaTime);
 
         void RecalculateProjectionMatrix(glm::ivec2& frameBufferSize);
-        void RecalculateViewMatrix(WorldTransform& transform);
+        void RecalculateViewMatrix(SimpleTransform& transform);
         void RecalculateVPMatrix();
 
         [[nodiscard]] inline glm::mat4 GetProjectionMatrix() const {
@@ -26,13 +26,13 @@ namespace Engine::Scene {
             return m_vpMatrix;
         }
     private:
-        WorldTransform m_transform;
+        SimpleTransform m_transform;
 
         float m_nearPlan = 0.1, m_farPlan = 100, m_fov = glm::half_pi<float>();
         float m_aspectRatio = 0;
 
         glm::ivec2 m_pm_frameSize = {0, 0 };
-        WorldTransform m_vm_transform;
+        SimpleTransform m_vm_transform;
         bool m_recalculate_vp = true;
 
         glm::mat4 m_projectionMatrix;

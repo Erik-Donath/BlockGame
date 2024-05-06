@@ -3,46 +3,36 @@
 //
 
 #pragma once
-#include <memory>
 #include "Window.h"
 #include "../Scene/Scene.h"
 
-namespace Engine::App {
+namespace Application {
     class Application {
     public:
         Application();
         ~Application();
 
-        void Run();
-        void SetScene(std::shared_ptr<Scene::Scene>& scene);
-
-        inline void Run(std::shared_ptr<Scene::Scene>& scene) {
-            SetScene(scene);
-            Run();
-        }
-
-        static double GetTime();
+        void Run(Scene::Scene* scene);
 
         [[nodiscard]] inline Window* GetWindow() const {
             return m_window;
         }
+        [[nodiscard]] inline GLFWwindow* GetWindowHandle() const {
+            return m_window->GetHandle();
+        }
         [[nodiscard]] inline double GetDeltaTime() const {
             return m_deltaTime;
         }
-        [[nodiscard]] inline std::shared_ptr<Scene::Scene> GetScene() const {
-            return m_scene;
+        [[nodiscard]] static inline double GetTime() {
+            return glfwGetTime();
         }
-
         [[nodiscard]] inline static Application* GetInstance() {
             return s_instance;
         }
-
     private:
-        bool m_changedScene = false;
-        std::shared_ptr<Scene::Scene> m_scene = nullptr;
-
-        Window* m_window = nullptr;
-        double m_deltaTime = 0.0001;
+        Window* m_window;
+        Scene::Scene* m_scene;
+        double m_deltaTime;
 
         static Application* s_instance;
     };

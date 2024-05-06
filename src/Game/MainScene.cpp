@@ -21,9 +21,6 @@ void MainScene::Finalize() {
     Scene::Finalize();
     delete m_block;
     delete m_camera;
-
-    m_block = nullptr;
-    m_camera = nullptr;
 }
 
 void MainScene::Update(double deltaTime) {
@@ -32,7 +29,7 @@ void MainScene::Update(double deltaTime) {
     Scene::Update(deltaTime);
 }
 
-void MainScene::Render(Engine::App::Window& window) {
+void MainScene::Render(GLFWwindow *window) {
     const glm::mat4& vp = m_camera->GetVPMatrix();
 
     m_block->Render(vp);

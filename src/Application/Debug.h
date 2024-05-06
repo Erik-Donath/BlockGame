@@ -3,9 +3,9 @@
 //
 
 #pragma once
-#include "../GL/Renderer.h"
+#include "../Rendering/Renderer.h"
 
-namespace Engine::Common {
+namespace Application {
     class Debug {
     public:
         static void Setup();
@@ -13,10 +13,7 @@ namespace Engine::Common {
         static void Update(double deltaTime);
         static void Render(GLFWwindow* window);
     private:
-        static bool s_showDebug;
-        static bool s_showKeyState;
-
         static bool s_vsync;
-        static GL::RenderMode s_renderMode;
+        static Rendering::RenderMode s_renderMode;
     };
 }

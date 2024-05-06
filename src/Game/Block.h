@@ -2,10 +2,8 @@
 // Created by erikd on 04.05.2024.
 //
 #pragma once
-#include "../Engine/GL/Renderer.h"
-#include "../Engine/Scene/Transform.h"
-
-using namespace Engine;
+#include "../Rendering/Renderer.h"
+#include "../Scene/Transform.h"
 
 class Block {
 public:
@@ -15,13 +13,13 @@ public:
     void Update(const double deltaTime);
     void Render(const glm::mat4& vp);
 private:
-    GL::VertexArray* m_vao;
-    GL::VertexBuffer* m_vbo;
-    GL::IndexBuffer* m_ebo;
+    Rendering::VertexArray* m_vao;
+    Rendering::VertexBuffer* m_vbo;
+    Rendering::IndexBuffer* m_ebo;
 
-    GL::Shader* m_shader;
+    Rendering::Shader* m_shader;
 
-    Scene::WorldTransform m_transform;
+    Scene::ObjectTransform m_transform;
 
     constexpr static const float s_vertices[] = {
             -1, -1,  1, //0

@@ -3,13 +3,12 @@
 //
 #pragma once
 #include <glm/glm.hpp>
-
 #include "VertexArray.h"
 #include "Shader.h"
 
 #define DefaultClearColor glm::vec4(0.2f, 0.3f, 0.3f, 1.0f)
 
-namespace Engine::GL {
+namespace Rendering {
     enum RenderMode: GLenum {
         Point = GL_POINT,
         Line = GL_LINE,
@@ -24,7 +23,7 @@ namespace Engine::GL {
         inline static void ClearColor(glm::vec4 color) {
             GLCall(glClearColor(color.r, color.g, color.b, color.a));
         }
-        inline static void Draw(const VertexArray& vao, const IndexBuffer& ebo, const Shader& shader) {
+        inline static void Draw(const Rendering::VertexArray& vao, const Rendering::IndexBuffer& ebo, const Rendering::Shader& shader) {
             vao.Bind();
             ebo.Bind();
             shader.Bind();
@@ -41,9 +40,7 @@ namespace Engine::GL {
             GLCall(glDisable(GL_BLEND));
         }
         inline static void SetMode(RenderMode mode) {
-            GLCall(glPointSize(10.0f));
-            GLCall(glLineWidth(10.0f));
-            GLCall(glPolygonMode(GL_FRONT_AND_BACK, mode));
+            glPolygonMode(GL_FRONT_AND_BACK, mode);
         }
     };
 }
