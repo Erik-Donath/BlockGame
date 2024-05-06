@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <stb/stb_image.h>
+#include "stb/stb_image.h"
 #include "Texture.h"
 
 using namespace Rendering;

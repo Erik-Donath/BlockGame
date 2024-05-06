@@ -2,8 +2,8 @@
 // Created by erikd on 04.05.2024.
 //
 #pragma once
-#include "../Rendering/Renderer.h"
-#include "../Scene/Transform.h"
+#include "../Engine/Rendering/Renderer.h"
+#include "../Engine/Scene/Transform.h"
 
 class Block {
 public:

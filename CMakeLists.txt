@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 project(BlockGame)
 
 ### Setup
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/bin)
@@ -20,36 +20,36 @@ add_executable(BlockGame
         src/main.cpp
 
         # Application
-        src/Application/Application.h
-        src/Application/Application.cpp
-        src/Application/Window.h
-        src/Application/Window.cpp
-        src/Application/Input.h
-        src/Application/ImGUI.h
-        src/Application/ImGUI.cpp
-        src/Application/Debug.h
-        src/Application/Debug.cpp
+        src/Engine/App/Application.h
+        src/Engine/App/Application.cpp
+        src/Engine/App/Window.h
+        src/Engine/App/Window.cpp
+        src/Engine/App/Input.h
+        src/Engine/App/Gui.h
+        src/Engine/App/Gui.cpp
+        src/Engine/Common/Debug.h
+        src/Engine/Common/Debug.cpp
 
         # Rendering
-        src/Rendering/GL.h
-        src/Rendering/GL.cpp
-        src/Rendering/VertexBuffer.h
-        src/Rendering/IndexBuffer.h
-        src/Rendering/VertexArray.h
-        src/Rendering/VertexArray.cpp
-        src/Rendering/Shader.h
-        src/Rendering/Shader.cpp
-        src/Rendering/Texture.h
-        src/Rendering/Texture.cpp
-        src/Rendering/Renderer.h
+        src/Engine/Rendering/GL.h
+        src/Engine/Rendering/GL.cpp
+        src/Engine/Rendering/VertexBuffer.h
+        src/Engine/Rendering/IndexBuffer.h
+        src/Engine/Rendering/VertexArray.h
+        src/Engine/Rendering/VertexArray.cpp
+        src/Engine/Rendering/Shader.h
+        src/Engine/Rendering/Shader.cpp
+        src/Engine/Rendering/Texture.h
+        src/Engine/Rendering/Texture.cpp
+        src/Engine/Rendering/Renderer.h
 
         # Scene
-        src/Scene/Scene.h
-        src/Scene/Scene.cpp
-        src/Scene/Transform.h
-        src/Scene/Transform.cpp
-        src/Scene/Camera.h
-        src/Scene/Camera.cpp
+        src/Engine/Scene/Scene.h
+        src/Engine/Scene/Scene.cpp
+        src/Engine/Scene/Transform.h
+        src/Engine/Scene/Transform.cpp
+        src/Engine/Scene/Camera.h
+        src/Engine/Scene/Camera.cpp
 
         # Game
         src/Game/MainScene.h

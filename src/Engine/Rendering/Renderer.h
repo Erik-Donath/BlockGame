@@ -2,7 +2,7 @@
 // Created by erikd on 30.04.2024.
 //
 #pragma once
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "VertexArray.h"
 #include "Shader.h"
 

@@ -21,6 +21,8 @@ void MainScene::Finalize() {
     Scene::Finalize();
     delete m_block;
     delete m_camera;
+    m_block = nullptr;
+    m_camera = nullptr;
 }
 
 void MainScene::Update(double deltaTime) {

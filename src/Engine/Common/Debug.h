@@ -5,7 +5,7 @@
 #pragma once
 #include "../Rendering/Renderer.h"
 
-namespace Application {
+namespace Engine::Common {
     class Debug {
     public:
         static void Setup();

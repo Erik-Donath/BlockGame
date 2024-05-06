@@ -5,12 +5,15 @@
 #include <iostream>
 
 #include "../Rendering/Renderer.h"
-#include "ImGUI.h"
+#include "Gui.h"
 #include "Application.h"
 
-Application::Application* Application::Application::s_instance = nullptr;
+using namespace Engine;
+using namespace Engine::App;
 
-Application::Application::Application(): m_window(nullptr), m_scene(nullptr), m_deltaTime(0.0001) {
+App::Application* App::Application::s_instance = nullptr;
+
+App::Application::Application() {
     if(s_instance) {
         std::cerr << "Error: Application should be a singleton!" << std::endl;
         return;
@@ -18,23 +21,32 @@ Application::Application::Application(): m_window(nullptr), m_scene(nullptr), m_
     s_instance = this;
 }
 
-Application::Application::~Application() {
-    if(s_instance == this) {
-        s_instance = nullptr;
-    }
+App::Application::~Application() {
+    if(s_instance == this) s_instance = nullptr;
     delete m_window;
 }
 
-void Application::Application::Run(Scene::Scene* scene) {
+void App::Application::SetScene(const std::shared_ptr<Scene::Scene> &scene) {
+    if(m_scene) m_scene->Finalize(); // FIXME: Can curse bug when called twice before Run().
+
+    m_scene = scene;
+    m_changedScene = true; // Setup should only be called, if the Application is loaded.
+}
+
+void App::Application::Run() {
     if(s_instance != this) {
         std::cerr << "Error: Tried to Run Application while another Application runs." << std::endl;
         return;
     }
 
-    m_scene = scene;
-    m_window = new Window("Block Game", glm::ivec2(1920, 1080), WindowProperties());
+    if(!m_scene) {
+        std::cerr << "Error: Tried to Run Application without Scene set." << std::endl;
+        return;
+    }
 
-    ImGUISetup(m_window->GetHandle());
+    m_window = new Window("Block Game", glm::ivec2(1920, 1080), WindowProperties::Default());
+
+    Gui::ImGUISetup(m_window->GetHandle());
 
     Rendering::Renderer::ClearColor(DefaultClearColor);
     Rendering::Renderer::SetBlendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
@@ -43,11 +55,15 @@ void Application::Application::Run(Scene::Scene* scene) {
 
     double lastTime = glfwGetTime();
 
-    m_scene->Setup();
     while(!m_window->ShouldClose()) {
+        if(m_changedScene) {
+            m_scene->Setup();
+            m_changedScene = false;
+        }
+
         // Begin Frame
         Rendering::Renderer::Clear();
-        ImGUIBeforeRender();
+        Gui::ImGUIBeforeRender();
 
         // Calculate DeltaTime
         double now = glfwGetTime();
@@ -59,12 +75,15 @@ void Application::Application::Run(Scene::Scene* scene) {
         m_scene->Render(m_window->GetHandle());
 
         // Finalize Frame
-        ImGUIAfterRender();
+        Gui::ImGUIAfterRender();
         m_window->SwapBuffers();
         Window::PollEvents();
     }
     m_scene->Finalize();
-    ImGuiShutdown();
+    Gui::ImGuiShutdown();
 }
 // 935
 // => 229
+double App::Application::GetTime() {
+    return glfwGetTime();
+}

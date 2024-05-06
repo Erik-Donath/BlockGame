@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include "../Scene/Scene.h"
-#include "../Scene/Camera.h"
+#include "../Engine/Scene/Scene.h"
+#include "../Engine/Scene/Camera.h"
 #include "Block.h"
 
 class MainScene: public Scene::Scene {

@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "../Application/Window.h"
+#include "../App/Window.h"
 
 namespace Scene {
     class Scene {

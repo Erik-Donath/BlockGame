@@ -2,17 +2,19 @@
 // Created by erikd on 27.04.2024.
 //
 
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
+#include "Gui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 
-#include "ImGUI.h"
+#include "Gui.h"
+
+using namespace Engine::App;
 
 static bool s_imgui_loaded = false;
 
-void ImGUISetup(GLFWwindow* window) {
+void Gui::ImGUISetup(GLFWwindow* window) {
     if(s_imgui_loaded) return;
 
     const char* glsl_version = "#version 130";
@@ -37,13 +39,13 @@ void ImGUISetup(GLFWwindow* window) {
     s_imgui_loaded = true;
 }
 
-void ImGUIBeforeRender() {
+void Gui::ImGUIBeforeRender() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-void ImGUIAfterRender() {
+void Gui::ImGUIAfterRender() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -56,7 +58,7 @@ void ImGUIAfterRender() {
     }
 }
 
-void ImGuiShutdown() {
+void Gui::ImGuiShutdown() {
     if(!s_imgui_loaded) return;
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

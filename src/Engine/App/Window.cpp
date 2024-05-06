@@ -6,7 +6,7 @@
 #include "../Rendering/GL.h"
 #include "Window.h"
 
-using namespace Application;
+using namespace Engine::App;
 
 u32 Window::s_windowCount = 0;
 bool Window::s_currentSwapInterval = false;

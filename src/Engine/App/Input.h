@@ -3,14 +3,14 @@
 //
 
 #pragma once
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 #include "Application.h"
-#include "../Defines.h"
+#include "../../Defines.h"
 
 #define GKey GLFW_KEY_
 #define Key(s) GLFW_KEY_ ## s
 
-namespace Application {
+namespace Engine::App {
     class Input {
     public:
         inline static i32 GetState(i32 key) {

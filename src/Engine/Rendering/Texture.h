@@ -4,7 +4,7 @@
 
 #pragma once
 #include <string>
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "GL.h"
 
 namespace Rendering {

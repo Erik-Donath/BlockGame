@@ -3,8 +3,8 @@
 //
 #pragma once
 
-#include <glm/glm.hpp>
-#include "../Application/Window.h"
+#include "glm/glm.hpp"
+#include "../App/Window.h"
 #include "Transform.h"
 
 namespace Scene {

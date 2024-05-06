@@ -2,7 +2,7 @@
 // Created by erikd on 04.05.2024.
 //
 
-#include "../Application/Application.h"
+#include "../Engine/App/Application.h"
 #include "Block.h"
 
 Block::Block(): m_vao(nullptr), m_vbo(nullptr), m_ebo(nullptr), m_shader(nullptr) {
@@ -31,7 +31,7 @@ Block::~Block() {
 }
 
 void Block::Update(const double deltaTime) {
-    double time = Application::Application::GetTime();
+    double time = Engine::App::Application::GetTime();
 
     m_transform.SetRotationEuler(glm::vec3(time + 0, time + 1, time + 2));
 

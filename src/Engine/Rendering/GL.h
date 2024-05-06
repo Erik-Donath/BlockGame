@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include <glad/glad.h>
-#include "../Defines.h"
+#include "glad/glad.h"
+#include "../../Defines.h"
 
 //#define GL_Above46 // Falls das Projekt OpenGL Version 4.6 oder höher verwendet, können andere Funktionen genutzt werden.
 

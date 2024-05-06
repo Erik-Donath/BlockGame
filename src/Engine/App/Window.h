@@ -3,33 +3,37 @@
 //
 #pragma once
 #include <string>
-#include <glm/glm.hpp>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glm/glm.hpp"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
-#include "../Defines.h"
+#include "../../Defines.h"
 
-namespace Application {
+namespace Engine::App {
     struct WindowProperties {
         const i32 GLmajor, GLminor;
         const bool GLcore, GLcompat, resizable;
 
-        explicit WindowProperties(bool resizable = false, i32 major = 3, i32 minor = 3, bool core = true,
-                                  bool compat = false)
-                : resizable(resizable), GLcore(core), GLmajor(major), GLminor(minor), GLcompat(compat) {}
+        explicit WindowProperties(bool resizable, i32 major, i32 minor, bool core, bool compat)
+        : resizable(resizable), GLcore(core), GLmajor(major), GLminor(minor), GLcompat(compat) { }
+
+        static inline WindowProperties Default() {
+            return WindowProperties(true, 3, 3, true, false);
+        }
     };
 
     class Window {
     public:
         Window(const std::string &title, const glm::ivec2 &size, const WindowProperties &properties);
-
         ~Window();
 
         [[nodiscard]] inline GLFWwindow *GetHandle() const {
             return m_handle;
         }
+
         [[nodiscard]] glm::ivec2 GetSize() const;
         [[nodiscard]] glm::ivec2 GetFrameSize() const;
+
         [[nodiscard]] inline bool ShouldClose() const {
             return glfwWindowShouldClose(m_handle);
         }

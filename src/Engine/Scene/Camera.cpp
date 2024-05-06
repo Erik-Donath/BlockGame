@@ -3,14 +3,15 @@
 //
 
 #include "../Rendering/GL.h"
-#include "../Application/Application.h"
+#include "../App/Application.h"
 #include "Camera.h"
 
 void Scene::Camera::Update(double deltaTime) {
-    double time = Application::Application::GetTime();
-    m_transform.SetPosition(glm::vec3(cos(time), 0.0f, sin(time)));
+    double time = Engine::App::Application::GetTime();
+    //m_transform.SetPosition(glm::vec3(cos(time), 0.0f, sin(time)));
+    m_transform.SetPosition(glm::vec3(0.0f, 0.0f, -1.5f));
 
-    glm::ivec2 frameBufferSize = Application::Application::GetInstance()->GetWindow()->GetFrameSize();
+    glm::ivec2 frameBufferSize = Engine::App::Application::GetInstance()->GetWindow()->GetFrameSize();
     if(frameBufferSize != m_pm_frameSize) RecalculateProjectionMatrix(frameBufferSize);
     if(m_transform != m_vm_transform) RecalculateViewMatrix(m_transform);
     if(m_recalculate_vp) RecalculateVPMatrix();

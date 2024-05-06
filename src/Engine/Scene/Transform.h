@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtc/quaternion.hpp"
 
 #define ForwardVector  glm::vec3( 0.0f,  0.0f,  1.0f)
 #define BackwardVector glm::vec3( 0.0f,  0.0f, -1.0f)

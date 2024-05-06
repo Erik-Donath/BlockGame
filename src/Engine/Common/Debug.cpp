@@ -2,11 +2,13 @@
 // Created by erikd on 04.05.2024.
 //
 
-#include "Window.h"
-#include "ImGUI.h"
+#include "../App/Window.h"
+#include "../App/Gui.h"
 #include "../Rendering/Renderer.h"
 
 #include "Debug.h"
+
+using namespace Engine::Common;
 
 // Render Options
 static const char* renderOptions[] = {"Point", "Line", "Fill"};
@@ -27,19 +29,19 @@ static Rendering::RenderMode GetRenderModeFromOption(u8 id) {
     }
 }
 
-bool Application::Debug::s_vsync = false;
-Rendering::RenderMode Application::Debug::s_renderMode = Rendering::RenderMode::Line;
+bool Debug::s_vsync = false;
+Rendering::RenderMode Debug::s_renderMode = Rendering::RenderMode::Line;
 
-void Application::Debug::Setup() {
-    Window::SetVSYNC(s_vsync);
+void Debug::Setup() {
+    Engine::App::Window::SetVSYNC(s_vsync);
     Rendering::Renderer::SetMode(s_renderMode);
 }
 
-void Application::Debug::Finalize() { }
+void Debug::Finalize() { }
 
-void Application::Debug::Update(double deltaTime) { }
+void Debug::Update(double deltaTime) { }
 
-void Application::Debug::Render(GLFWwindow *window) {
+void Debug::Render(GLFWwindow *window) {
     ImGuiIO& io = ImGui::GetIO();
     ImGui::Begin("Application Info");
 
@@ -47,7 +49,7 @@ void Application::Debug::Render(GLFWwindow *window) {
     GLCall(ImGui::Text("OpenGL Version: %s", glGetString(GL_VERSION)));
 
     ImGui::Text("Settings");
-    if(ImGui::Checkbox("Vsync", &s_vsync)) Window::SetVSYNC(s_vsync);
+    if(ImGui::Checkbox("Vsync", &s_vsync)) Engine::App::Window::SetVSYNC(s_vsync);
 
     // Render Options
     cstr currentRenderOption = renderOptions[GetOptionFromRenderMode(s_renderMode)];
