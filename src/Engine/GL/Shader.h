@@ -33,7 +33,7 @@ namespace Engine::GL {
             Bind();
         }
 
-        inline glId getID() {
+        inline glId GetID() const {
             return m_id;
         }
 

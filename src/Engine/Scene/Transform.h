@@ -52,9 +52,9 @@ namespace Engine::Scene {
             return !(lhs == rhs);
         }
     private:
-        glm::vec3 m_position;
-        glm::vec3 m_scale;
-        glm::vec3 m_direction;
+        glm::vec3 m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::vec3 m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
+        glm::vec3 m_direction = glm::vec3(1.0f, 0.0f, 0.0f);
 
         bool m_updateMatrix = true;
         glm::mat4 m_modelMatrix;
