@@ -7,7 +7,7 @@
 #include "glm/glm.hpp"
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     class Shader {
     public:
         Shader(const std::string &vertex, const std::string &fragment);

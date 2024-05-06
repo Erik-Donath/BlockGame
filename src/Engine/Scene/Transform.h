@@ -13,7 +13,7 @@
 #define RightVector    glm::vec3( 1.0f,  0.0f,  0.0f)
 #define LeftVector     glm::vec3(-1.0f,  0.0f,  0.0f)
 
-namespace Scene {
+namespace Engine::Scene {
     struct SimpleTransform {
     public:
         SimpleTransform() : m_position(0.0, 0.0, 0.0), m_rotation(0.0, 0.0, 0.0, 1.0), m_recalculate(true) { }

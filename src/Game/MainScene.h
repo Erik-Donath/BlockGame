@@ -7,7 +7,7 @@
 #include "../Engine/Scene/Camera.h"
 #include "Block.h"
 
-class MainScene: public Scene::Scene {
+class MainScene: public Engine::Scene::Scene {
 public:
     MainScene();
     ~MainScene();
@@ -19,6 +19,6 @@ public:
 
 private:
     Block* m_block;
-    ::Scene::Camera* m_camera;
+    Engine::Scene::Camera* m_camera;
 };
 

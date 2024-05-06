@@ -7,7 +7,7 @@
 #include "glm/glm.hpp"
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     class Texture {
     public:
         explicit Texture(const std::string &path);

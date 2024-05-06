@@ -7,7 +7,7 @@
 #include <sstream>
 #include "Shader.h"
 
-using namespace Rendering;
+using namespace Engine::GL;
 
 static std::string ReadShaderFile(const std::string& path) {
     std::ifstream file(path);
@@ -65,7 +65,7 @@ glid Shader::CompileShader(GLenum type, cstr source) {
         char* msg = new char[length];
         GLCall(glGetShaderInfoLog(id, length, &length, msg));
 
-        std::cerr << "Error: Failed to compile " << GetShaderType(type) << " Shader: " << std::endl << msg << std::endl;
+        std::cerr << "Error: Failed to compile " << GL::GetShaderType(type) << " Shader: " << std::endl << msg << std::endl;
         delete[] msg;
 
         GLCall(glDeleteShader(id));

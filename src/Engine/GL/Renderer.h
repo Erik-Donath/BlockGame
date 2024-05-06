@@ -8,7 +8,7 @@
 
 #define DefaultClearColor glm::vec4(0.2f, 0.3f, 0.3f, 1.0f)
 
-namespace Rendering {
+namespace Engine::GL {
     enum RenderMode: GLenum {
         Point = GL_POINT,
         Line = GL_LINE,
@@ -23,7 +23,7 @@ namespace Rendering {
         inline static void ClearColor(glm::vec4 color) {
             GLCall(glClearColor(color.r, color.g, color.b, color.a));
         }
-        inline static void Draw(const Rendering::VertexArray& vao, const Rendering::IndexBuffer& ebo, const Rendering::Shader& shader) {
+        inline static void Draw(const Engine::GL::VertexArray& vao, const Engine::GL::IndexBuffer& ebo, const Engine::GL::Shader& shader) {
             vao.Bind();
             ebo.Bind();
             shader.Bind();

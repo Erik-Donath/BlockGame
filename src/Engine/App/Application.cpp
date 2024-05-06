@@ -4,16 +4,15 @@
 
 #include <iostream>
 
-#include "../Rendering/Renderer.h"
+#include "../GL/Renderer.h"
 #include "Gui.h"
 #include "Application.h"
 
-using namespace Engine;
 using namespace Engine::App;
 
-App::Application* App::Application::s_instance = nullptr;
+Application* Application::s_instance = nullptr;
 
-App::Application::Application() {
+Application::Application() {
     if(s_instance) {
         std::cerr << "Error: Application should be a singleton!" << std::endl;
         return;
@@ -21,19 +20,19 @@ App::Application::Application() {
     s_instance = this;
 }
 
-App::Application::~Application() {
+Application::~Application() {
     if(s_instance == this) s_instance = nullptr;
     delete m_window;
 }
 
-void App::Application::SetScene(const std::shared_ptr<Scene::Scene> &scene) {
+void Application::SetScene(const std::shared_ptr<Scene::Scene> &scene) {
     if(m_scene) m_scene->Finalize(); // FIXME: Can curse bug when called twice before Run().
 
     m_scene = scene;
     m_changedScene = true; // Setup should only be called, if the Application is loaded.
 }
 
-void App::Application::Run() {
+void Application::Run() {
     if(s_instance != this) {
         std::cerr << "Error: Tried to Run Application while another Application runs." << std::endl;
         return;
@@ -48,10 +47,10 @@ void App::Application::Run() {
 
     Gui::ImGUISetup(m_window->GetHandle());
 
-    Rendering::Renderer::ClearColor(DefaultClearColor);
-    Rendering::Renderer::SetBlendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
-    Rendering::Renderer::EnableBlending();
-    Rendering::Renderer::SetMode(Rendering::RenderMode::Fill);
+    GL::Renderer::ClearColor(DefaultClearColor);
+    GL::Renderer::SetBlendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
+    GL::Renderer::EnableBlending();
+    GL::Renderer::SetMode(GL::RenderMode::Fill);
 
     double lastTime = glfwGetTime();
 
@@ -62,7 +61,7 @@ void App::Application::Run() {
         }
 
         // Begin Frame
-        Rendering::Renderer::Clear();
+        GL::Renderer::Clear();
         Gui::ImGUIBeforeRender();
 
         // Calculate DeltaTime
@@ -84,6 +83,6 @@ void App::Application::Run() {
 }
 // 935
 // => 229
-double App::Application::GetTime() {
+double Application::GetTime() {
     return glfwGetTime();
 }

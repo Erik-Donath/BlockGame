@@ -5,13 +5,15 @@
 #include <iostream>
 #include "GL.h"
 
-void Rendering::GLCheckError(cstr file, u32 line) {
+using namespace Engine::GL;
+
+void GL::GLCheckError(cstr file, u32 line) {
     while (GLenum code = glGetError()) {
-        std::cerr << "Error: GL " << code << ": " << GetErrorType(code) << " at " << file << ':' << line << std::endl;
+        std::cerr << "Error: GL " << code << ": " << GL::GetErrorType(code) << " at " << file << ':' << line << std::endl;
     }
 }
 
-size_t Rendering::GetSizeOfType(GLenum type) {
+size_t GL::GetSizeOfType(GLenum type) {
     switch (type) {
         case GL_BOOL: return sizeof(GLboolean);
         case GL_BYTE: return sizeof(GLbyte);
@@ -29,7 +31,7 @@ size_t Rendering::GetSizeOfType(GLenum type) {
     }
 }
 
-cstr Rendering::GetErrorType(GLenum code) {
+cstr GL::GetErrorType(GLenum code) {
     switch (code) {
         case GL_NO_ERROR:                       return "GL_NO_ERROR";
         case GL_INVALID_ENUM:                   return "GL_INVALID_ENUM";
@@ -45,7 +47,7 @@ cstr Rendering::GetErrorType(GLenum code) {
     }
 }
 
-cstr Rendering::GetShaderType(GLenum type) {
+cstr GL::GetShaderType(GLenum type) {
     switch (type) {
         case GL_VERTEX_SHADER: return "vertex";
         case GL_FRAGMENT_SHADER: return "fragment";

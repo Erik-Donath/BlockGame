@@ -3,7 +3,7 @@
 //
 
 #include "Transform.h"
-using namespace Scene;
+using namespace Engine::Scene;
 
 glm::mat4 ObjectTransform::GetModelMatrix() {
     if(m_recalculate) {

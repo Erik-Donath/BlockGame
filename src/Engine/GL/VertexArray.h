@@ -7,7 +7,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
-namespace Rendering {
+namespace Engine::GL {
     struct VertexArray {
     public:
         VertexArray();

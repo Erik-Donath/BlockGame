@@ -4,7 +4,7 @@
 
 #include "../App/Window.h"
 #include "../App/Gui.h"
-#include "../Rendering/Renderer.h"
+#include "../GL/Renderer.h"
 
 #include "Debug.h"
 
@@ -12,7 +12,7 @@ using namespace Engine::Common;
 
 // Render Options
 static const char* renderOptions[] = {"Point", "Line", "Fill"};
-static byte GetOptionFromRenderMode(Rendering::RenderMode mode) {
+static byte GetOptionFromRenderMode(Engine::GL::RenderMode mode) {
     switch (mode) {
         case GL_POINT: return 0;
         case GL_LINE: return 1;
@@ -20,21 +20,21 @@ static byte GetOptionFromRenderMode(Rendering::RenderMode mode) {
         default: return 0;
     }
 }
-static Rendering::RenderMode GetRenderModeFromOption(u8 id) {
+static Engine::GL::RenderMode GetRenderModeFromOption(u8 id) {
     switch (id) {
-        case 0: return Rendering::RenderMode::Point;
-        case 1: return Rendering::RenderMode::Line;
-        case 2: return Rendering::RenderMode::Fill;
-        default: return Rendering::RenderMode::Point;
+        case 0: return Engine::GL::RenderMode::Point;
+        case 1: return Engine::GL::RenderMode::Line;
+        case 2: return Engine::GL::RenderMode::Fill;
+        default: return Engine::GL::RenderMode::Point;
     }
 }
 
 bool Debug::s_vsync = false;
-Rendering::RenderMode Debug::s_renderMode = Rendering::RenderMode::Line;
+Engine::GL::RenderMode Debug::s_renderMode = Engine::GL::RenderMode::Line;
 
 void Debug::Setup() {
     Engine::App::Window::SetVSYNC(s_vsync);
-    Rendering::Renderer::SetMode(s_renderMode);
+    GL::Renderer::SetMode(s_renderMode);
 }
 
 void Debug::Finalize() { }
@@ -60,7 +60,7 @@ void Debug::Render(GLFWwindow *window) {
 
             if(ImGui::Selectable(option, selected)) {
                 s_renderMode = GetRenderModeFromOption(i);
-                Rendering::Renderer::SetMode(s_renderMode);
+                GL::Renderer::SetMode(s_renderMode);
             }
 
             if(selected) ImGui::SetItemDefaultFocus();

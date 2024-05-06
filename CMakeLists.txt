@@ -30,18 +30,18 @@ add_executable(BlockGame
         src/Engine/Common/Debug.h
         src/Engine/Common/Debug.cpp
 
-        # Rendering
-        src/Engine/Rendering/GL.h
-        src/Engine/Rendering/GL.cpp
-        src/Engine/Rendering/VertexBuffer.h
-        src/Engine/Rendering/IndexBuffer.h
-        src/Engine/Rendering/VertexArray.h
-        src/Engine/Rendering/VertexArray.cpp
-        src/Engine/Rendering/Shader.h
-        src/Engine/Rendering/Shader.cpp
-        src/Engine/Rendering/Texture.h
-        src/Engine/Rendering/Texture.cpp
-        src/Engine/Rendering/Renderer.h
+        # GL
+        src/Engine/GL/GL.h
+        src/Engine/GL/GL.cpp
+        src/Engine/GL/VertexBuffer.h
+        src/Engine/GL/IndexBuffer.h
+        src/Engine/GL/VertexArray.h
+        src/Engine/GL/VertexArray.cpp
+        src/Engine/GL/Shader.h
+        src/Engine/GL/Shader.cpp
+        src/Engine/GL/Texture.h
+        src/Engine/GL/Texture.cpp
+        src/Engine/GL/Renderer.h
 
         # Scene
         src/Engine/Scene/Scene.h

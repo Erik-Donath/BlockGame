@@ -5,7 +5,7 @@
 #pragma once
 #include "../App/Window.h"
 
-namespace Scene {
+namespace Engine::Scene {
     class Scene {
         public:
         virtual void Setup();

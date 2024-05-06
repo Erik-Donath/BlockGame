@@ -2,7 +2,7 @@
 // Created by erikd on 04.05.2024.
 //
 #pragma once
-#include "../Engine/Rendering/Renderer.h"
+#include "../Engine/GL/Renderer.h"
 #include "../Engine/Scene/Transform.h"
 
 class Block {
@@ -13,13 +13,13 @@ public:
     void Update(const double deltaTime);
     void Render(const glm::mat4& vp);
 private:
-    Rendering::VertexArray* m_vao;
-    Rendering::VertexBuffer* m_vbo;
-    Rendering::IndexBuffer* m_ebo;
+    Engine::GL::VertexArray* m_vao;
+    Engine::GL::VertexBuffer* m_vbo;
+    Engine::GL::IndexBuffer* m_ebo;
 
-    Rendering::Shader* m_shader;
+    Engine::GL::Shader* m_shader;
 
-    Scene::ObjectTransform m_transform;
+    Engine::Scene::ObjectTransform m_transform;
 
     constexpr static const float s_vertices[] = {
             -1, -1,  1, //0

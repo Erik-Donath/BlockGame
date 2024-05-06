@@ -14,7 +14,7 @@ MainScene::~MainScene() {
 void MainScene::Setup() {
     Scene::Setup();
     m_block  = new Block();
-    m_camera = new ::Scene::Camera();
+    m_camera = new Engine::Scene::Camera();
 }
 
 void MainScene::Finalize() {

@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "../Rendering/Renderer.h"
+#include "../GL/Renderer.h"
 
 namespace Engine::Common {
     class Debug {
@@ -14,6 +14,6 @@ namespace Engine::Common {
         static void Render(GLFWwindow* window);
     private:
         static bool s_vsync;
-        static Rendering::RenderMode s_renderMode;
+        static GL::RenderMode s_renderMode;
     };
 }

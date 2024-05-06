@@ -6,7 +6,7 @@
 #include <vector>
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     struct VertexBufferElement {
         GLenum type;
         u32 count;

@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../Rendering/GL.h"
+#include "../GL/GL.h"
 #include "Window.h"
 
 using namespace Engine::App;

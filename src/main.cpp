@@ -7,7 +7,7 @@
 int main() {
     Engine::App::Application app;
 
-    std::shared_ptr<Scene::Scene> mainScene = std::make_shared<MainScene>();
+    std::shared_ptr<Engine::Scene::Scene> mainScene = std::make_shared<MainScene>();
     app.Run(mainScene);
 
     return 0;

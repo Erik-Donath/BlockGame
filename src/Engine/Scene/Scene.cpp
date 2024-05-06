@@ -2,25 +2,27 @@
 // Created by erikd on 01.05.2024.
 //
 
-#include "../Rendering/GL.h"
+#include "../GL/GL.h"
 #include "../App/Input.h"
 #include "../App/Gui.h"
 #include "../Common/Debug.h"
 #include "Scene.h"
 
-void Scene::Scene::Setup() {
+using namespace Engine::Scene;
+
+void Scene::Setup() {
     Engine::Common::Debug::Setup();
 }
 
-void Scene::Scene::Finalize() {
+void Scene::Finalize() {
     Engine::Common::Debug::Finalize();
 }
 
-void Scene::Scene::Update(double deltaTime) {
+void Scene::Update(double deltaTime) {
     Engine::Common::Debug::Update(deltaTime);
 }
 
-void Scene::Scene::Render(GLFWwindow *window) {
+void Scene::Render(GLFWwindow *window) {
     Engine::Common::Debug::Render(window);
     //ImGui::ShowDemoWindow();
 }

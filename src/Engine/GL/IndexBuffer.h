@@ -5,7 +5,7 @@
 #pragma once
 #include "GL.h"
 
-namespace Rendering {
+namespace Engine::GL {
     struct IndexBuffer {
     public:
         inline explicit IndexBuffer(GLenum type) : m_id(0), m_type(type), m_size(0) {
@@ -43,7 +43,7 @@ namespace Rendering {
             return m_size;
         }
         [[nodiscard]] inline size_t GetCount() const {
-            return m_size / GetSizeOfType(m_type);
+            return m_size / GL::GetSizeOfType(m_type);
         }
     protected:
         glid m_id;
