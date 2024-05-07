@@ -10,8 +10,8 @@ using namespace Engine::Scene;
 
 void Camera::Update(double deltaTime) {
     double time = Engine::App::Application::GetTime();
-    //m_transform.SetPosition(glm::vec3(cos(time), 0.0f, sin(time)));
-    m_transform.SetPosition(glm::vec3(0.0f, 0.0f, -1.5f));
+    m_transform.SetPosition(glm::vec3(cos(time), 0.0f, -1.5f));
+    //m_transform.SetPosition(glm::vec3(0.0f, 0.0f, -1.5f));
 
     glm::ivec2 frameBufferSize = Engine::App::Application::GetInstance()->GetWindow()->GetFrameSize();
     if(frameBufferSize != m_pm_frameSize) RecalculateProjectionMatrix(frameBufferSize);

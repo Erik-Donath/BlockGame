@@ -15,6 +15,7 @@ Block::Block(): m_vao(nullptr), m_vbo(nullptr), m_ebo(nullptr), m_shader(nullptr
 
     std::vector<Engine::GL::VertexBufferElement> layout;
     layout.emplace_back(GL_FLOAT, 3); // Position
+    layout.emplace_back(GL_FLOAT, 3); // Color
     m_vbo->SetLayout(layout);
 
     m_vao->AddBuffer(*m_vbo);

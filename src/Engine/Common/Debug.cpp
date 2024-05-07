@@ -30,6 +30,9 @@ static Engine::GL::RenderMode GetRenderModeFromOption(u8 id) {
 }
 
 bool Debug::s_vsync = false;
+
+float Debug::s_renderPointSize = 1.0f;
+float Debug::s_renderLineWidth = 1.0f;
 Engine::GL::RenderMode Debug::s_renderMode = Engine::GL::RenderMode::Line;
 
 void Debug::Setup() {
@@ -60,12 +63,19 @@ void Debug::Render(GLFWwindow *window) {
 
             if(ImGui::Selectable(option, selected)) {
                 s_renderMode = GetRenderModeFromOption(i);
-                GL::Renderer::SetMode(s_renderMode);
+                GL::Renderer::SetMode(s_renderMode, s_renderLineWidth, s_renderPointSize);
             }
 
             if(selected) ImGui::SetItemDefaultFocus();
         }
         ImGui::EndCombo();
     }
+
+    if(s_renderMode == Engine::GL::RenderMode::Point && ImGui::SliderFloat("Render Point Size", &s_renderPointSize, 1.0f, 10.0f))
+        GL::Renderer::SetMode(s_renderMode, s_renderLineWidth, s_renderPointSize);
+    if(s_renderMode == Engine::GL::RenderMode::Line && ImGui::SliderFloat("Render Line Width", &s_renderLineWidth, 1.0f, 10.0f))
+        GL::Renderer::SetMode(s_renderMode, s_renderLineWidth, s_renderPointSize);
+
+
     ImGui::End();
 }

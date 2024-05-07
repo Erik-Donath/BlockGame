@@ -39,8 +39,10 @@ namespace Engine::GL {
         inline static void DisableBlending() {
             GLCall(glDisable(GL_BLEND));
         }
-        inline static void SetMode(RenderMode mode) {
-            glPolygonMode(GL_FRONT_AND_BACK, mode);
+        inline static void SetMode(RenderMode mode, float lineWidth = 1.0f, float pointSize = 1.0f) {
+            GLCall(glLineWidth(lineWidth));
+            GLCall(glPointSize(pointSize));
+            GLCall(glPolygonMode(GL_FRONT_AND_BACK, mode));
         }
     };
 }

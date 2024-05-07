@@ -14,6 +14,9 @@ namespace Engine::Common {
         static void Render(GLFWwindow* window);
     private:
         static bool s_vsync;
+
+        static float s_renderPointSize;
+        static float s_renderLineWidth;
         static GL::RenderMode s_renderMode;
     };
 }
