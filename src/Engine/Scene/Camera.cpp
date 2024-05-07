@@ -4,13 +4,26 @@
 
 #include "../GL/GL.h"
 #include "../App/Application.h"
+#include "../App/Input.h"
 #include "Camera.h"
 
 using namespace Engine::Scene;
 
 void Camera::Update(double deltaTime) {
-    double time = Engine::App::Application::GetTime();
-    m_transform.SetPosition(glm::vec3(cos(time), 0.0f, -1.5f));
+    const float cameraSpeed = (float)deltaTime * 10.0f; // adjust accordingly
+    if (App::Input::IsPressed(Key(W)))
+        m_transform.SetPosition(cameraSpeed * ForwardVector + m_transform.GetPosition());
+    if (App::Input::IsPressed(Key(S)))
+        m_transform.SetPosition(cameraSpeed * BackwardVector + m_transform.GetPosition());
+    if (App::Input::IsPressed(Key(A)))
+        m_transform.SetPosition(cameraSpeed * LeftVector + m_transform.GetPosition());
+    if (App::Input::IsPressed(Key(D)))
+        m_transform.SetPosition(cameraSpeed * RightVector + m_transform.GetPosition());
+    if (App::Input::IsPressed(Key(SPACE)))
+        m_transform.SetPosition(cameraSpeed * UpVector + m_transform.GetPosition());
+    if (App::Input::IsPressed(Key(LEFT_SHIFT)))
+        m_transform.SetPosition(cameraSpeed * DownVector + m_transform.GetPosition());
+
     //m_transform.SetPosition(glm::vec3(0.0f, 0.0f, -1.5f));
 
     glm::ivec2 frameBufferSize = Engine::App::Application::GetInstance()->GetWindow()->GetFrameSize();

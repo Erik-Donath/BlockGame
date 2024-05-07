@@ -29,10 +29,10 @@ Window::Window(const std::string &title, const glm::ivec2 &size, const WindowPro
     }
     s_windowCount += 1;
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, properties.GLmajor);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, properties.GLminor);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, properties.GLcore ? GLFW_OPENGL_CORE_PROFILE : GLFW_OPENGL_COMPAT_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, properties.GLcompat ? GLFW_TRUE : GLFW_FALSE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, properties.GLMajor);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, properties.GLMinor);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, properties.GLCore ? GLFW_OPENGL_CORE_PROFILE : GLFW_OPENGL_COMPAT_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, properties.GLCompat ? GLFW_TRUE : GLFW_FALSE);
     glfwWindowHint(GLFW_RESIZABLE, properties.resizable ? GLFW_TRUE : GLFW_FALSE);
 
     m_handle = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
@@ -69,6 +69,21 @@ Window::~Window() {
     if(!s_windowCount) {
         glfwTerminate();
     }
+}
+
+void Window::SwapBuffers() const {
+    glfwSwapBuffers(m_handle);
+}
+void Window::PollEvents() {
+    glfwPollEvents();
+}
+[[nodiscard]] bool Window::ShouldClose() const {
+    return glfwWindowShouldClose(m_handle);
+}
+
+void Window::SetVSYNC(bool enable) {
+    s_currentSwapInterval = enable;
+    glfwSwapInterval(enable ? GLFW_TRUE : GLFW_FALSE);
 }
 
 glm::ivec2 Window::GetSize() const {

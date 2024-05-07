@@ -5,7 +5,7 @@
 #include "../GL/GL.h"
 #include "../App/Input.h"
 #include "../App/Gui.h"
-#include "../Common/Debug.h"
+#include "../../Game/Debug/Debug.h"
 #include "Scene.h"
 
 using namespace Engine::Scene;

@@ -6,8 +6,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
 
-#define ForwardVector  glm::vec3( 0.0f,  0.0f,  1.0f)
-#define BackwardVector glm::vec3( 0.0f,  0.0f, -1.0f)
+#define ForwardVector  glm::vec3( 0.0f,  0.0f,  -1.0f)
+#define BackwardVector glm::vec3( 0.0f,  0.0f, 1.0f)
 #define UpVector       glm::vec3( 0.0f,  1.0f,  0.0f)
 #define DownVector     glm::vec3( 0.0f, -1.0f,  0.0f)
 #define RightVector    glm::vec3( 1.0f,  0.0f,  0.0f)
@@ -57,7 +57,6 @@ namespace Engine::Scene {
         glm::quat m_rotation;
         bool m_recalculate; // Is only used in Object Transform at the moment
     };
-
     struct ObjectTransform : public SimpleTransform {
     public:
         ObjectTransform(): SimpleTransform(), m_scale(1.0, 1.0, 1.0), m_modelMatrix(1.0) { }
@@ -80,6 +79,20 @@ namespace Engine::Scene {
         }
     private:
         glm::vec3 m_scale;
+        glm::mat4 m_modelMatrix;
+    };
+
+    struct WorldTransform {
+    public:
+        explicit WorldTransform(glm::vec3 position = glm::vec3(0.0f), glm::vec3 direction = ForwardVector, glm::vec3 scale = glm::vec3(1.0f)): m_position(position), m_direction(direction), m_scale(scale), m_changedValues(true), m_modelMatrix(glm::mat4(1.0f)) { }
+
+        glm::mat4 getModelMatrix();
+    private:
+        glm::vec3 m_position;
+        glm::vec3 m_direction;
+        glm::vec3 m_scale;
+
+        bool m_changedValues;
         glm::mat4 m_modelMatrix;
     };
 }

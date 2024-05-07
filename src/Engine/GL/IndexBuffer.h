@@ -33,7 +33,7 @@ namespace Engine::GL {
             GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
         }
 
-        [[nodiscard]] inline glid GetID() const {
+        [[nodiscard]] inline glId GetID() const {
             return m_id;
         }
         [[nodiscard]] inline GLenum GetType() const {
@@ -46,7 +46,7 @@ namespace Engine::GL {
             return m_size / GL::GetSizeOfType(m_type);
         }
     protected:
-        glid m_id;
+        glId m_id;
         GLenum m_type;
         size_t m_size;
     };

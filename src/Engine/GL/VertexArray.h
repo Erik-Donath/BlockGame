@@ -23,11 +23,11 @@ namespace Engine::GL {
             GLCall(glBindVertexArray(0));
         }
 
-        [[nodiscard]] inline glid GetId() const {
+        [[nodiscard]] inline glId GetId() const {
             return m_id;
         }
 
     protected:
-        glid m_id;
+        glId m_id;
     };
 }

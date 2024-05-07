@@ -15,4 +15,3 @@ namespace Engine::Scene {
         virtual void Render(GLFWwindow* window);
     };
 }
-

@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "../GL/Renderer.h"
+#include "../../Engine/GL/Renderer.h"
 
 namespace Engine::Common {
     class Debug {

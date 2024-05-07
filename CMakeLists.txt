@@ -27,8 +27,8 @@ add_executable(BlockGame
         src/Engine/App/Input.h
         src/Engine/App/Gui.h
         src/Engine/App/Gui.cpp
-        src/Engine/Common/Debug.h
-        src/Engine/Common/Debug.cpp
+        src/Game/Debug/Debug.h
+        src/Game/Debug/Debug.cpp
 
         # GL
         src/Engine/GL/GL.h
@@ -56,6 +56,7 @@ add_executable(BlockGame
         src/Game/MainScene.cpp
         src/Game/Block.h
         src/Game/Block.cpp
+        src/Engine/Common/Recalc.h
 
 )
 

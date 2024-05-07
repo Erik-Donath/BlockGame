@@ -49,7 +49,7 @@ namespace Engine::GL {
             m_elements = elements;
         }
 
-        [[nodiscard]] inline glid GetID() const {
+        [[nodiscard]] inline glId GetID() const {
             return m_id;
         }
 
@@ -62,7 +62,7 @@ namespace Engine::GL {
         }
 
     protected:
-        glid m_id;
+        glId m_id;
         size_t m_size;
         std::vector<VertexBufferElement> m_elements;
     };

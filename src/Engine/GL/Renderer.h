@@ -18,7 +18,7 @@ namespace Engine::GL {
     class Renderer {
     public:
         inline static void Clear() {
-            GLCall(glClear(GL_COLOR_BUFFER_BIT));
+            GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
         }
         inline static void ClearColor(glm::vec4 color) {
             GLCall(glClearColor(color.r, color.g, color.b, color.a));
@@ -29,6 +29,7 @@ namespace Engine::GL {
             shader.Bind();
             GLCall(glDrawElements(GL_TRIANGLES, ebo.GetCount(), ebo.GetType(), nullptr));
         }
+
         inline static void SetBlendFunction(GLenum src, GLenum dst, GLenum func) {
             GLCall(glBlendFunc(src, dst));
             GLCall(glBlendEquation(func));
@@ -39,6 +40,14 @@ namespace Engine::GL {
         inline static void DisableBlending() {
             GLCall(glDisable(GL_BLEND));
         }
+
+        inline static void EnableDepthTest() {
+            GLCall(glEnable(GL_DEPTH_TEST));
+        }
+        inline static void DisableDepthTest() {
+            GLCall(glDisable(GL_DEPTH_TEST));
+        }
+
         inline static void SetMode(RenderMode mode, float lineWidth = 1.0f, float pointSize = 1.0f) {
             GLCall(glLineWidth(lineWidth));
             GLCall(glPointSize(pointSize));

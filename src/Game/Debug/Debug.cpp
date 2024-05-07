@@ -2,9 +2,9 @@
 // Created by erikd on 04.05.2024.
 //
 
-#include "../App/Window.h"
-#include "../App/Gui.h"
-#include "../GL/Renderer.h"
+#include "../../Engine/App/Window.h"
+#include "../../Engine/App/Gui.h"
+#include "../../Engine/GL/Renderer.h"
 
 #include "Debug.h"
 
@@ -33,7 +33,7 @@ bool Debug::s_vsync = false;
 
 float Debug::s_renderPointSize = 1.0f;
 float Debug::s_renderLineWidth = 1.0f;
-Engine::GL::RenderMode Debug::s_renderMode = Engine::GL::RenderMode::Line;
+Engine::GL::RenderMode Debug::s_renderMode = Engine::GL::RenderMode::Fill;
 
 void Debug::Setup() {
     Engine::App::Window::SetVSYNC(s_vsync);

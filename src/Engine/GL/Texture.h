@@ -43,7 +43,7 @@ namespace Engine::GL {
         }
 
     protected:
-        glid m_id;
+        glId m_id;
 
         i32 m_bpp;
         glm::ivec2 m_size;

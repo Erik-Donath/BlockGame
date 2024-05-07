@@ -11,14 +11,16 @@
 
 namespace Engine::App {
     struct WindowProperties {
-        const i32 GLmajor, GLminor;
-        const bool GLcore, GLcompat, resizable;
+        const i32 GLMajor, GLMinor;
+        const bool GLCore, GLCompat;
 
-        explicit WindowProperties(bool resizable, i32 major, i32 minor, bool core, bool compat)
-        : resizable(resizable), GLcore(core), GLmajor(major), GLminor(minor), GLcompat(compat) { }
+        const bool resizable;
+
+        explicit WindowProperties(i32 major, i32 minor, bool core, bool compat, bool resizable)
+        : GLCore(core), GLMajor(major), GLMinor(minor), GLCompat(compat), resizable(resizable) { }
 
         static inline WindowProperties Default() {
-            return WindowProperties(true, 3, 3, true, false);
+            return WindowProperties( 3, 3, true, false, true);
         }
     };
 
@@ -27,29 +29,21 @@ namespace Engine::App {
         Window(const std::string &title, const glm::ivec2 &size, const WindowProperties &properties);
         ~Window();
 
-        [[nodiscard]] inline GLFWwindow *GetHandle() const {
-            return m_handle;
-        }
+        void SwapBuffers() const;
+        [[nodiscard]] bool ShouldClose() const;
 
         [[nodiscard]] glm::ivec2 GetSize() const;
         [[nodiscard]] glm::ivec2 GetFrameSize() const;
 
-        [[nodiscard]] inline bool ShouldClose() const {
-            return glfwWindowShouldClose(m_handle);
-        }
-        inline void SwapBuffers() const {
-            glfwSwapBuffers(m_handle);
-        }
+        static void PollEvents();
+        static void SetVSYNC(bool enable);
 
-        inline static void SetVSYNC(bool enable) {
-            s_currentSwapInterval = enable;
-            glfwSwapInterval(enable ? GLFW_TRUE : GLFW_FALSE);
+
+        [[nodiscard]] inline GLFWwindow *GetHandle() const {
+            return m_handle;
         }
-        inline static bool GetVSYNC() {
+        [[nodiscard]]  inline static bool GetVSYNC() {
             return s_currentSwapInterval;
-        }
-        inline static void PollEvents() {
-            glfwPollEvents();
         }
 
         inline static void SetErrorCallback(const GLFWerrorfun &callback) {

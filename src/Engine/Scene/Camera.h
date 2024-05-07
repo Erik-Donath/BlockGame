@@ -28,7 +28,7 @@ namespace Engine::Scene {
     private:
         Engine::Scene::SimpleTransform m_transform;
 
-        float m_nearPlan = 0.1, m_farPlan = 100, m_fov = glm::half_pi<float>();
+        float m_nearPlan = 0.1, m_farPlan = 100, m_fov = glm::radians(45.0f);
         float m_aspectRatio = 0;
 
         glm::ivec2 m_pm_frameSize = {0, 0 };

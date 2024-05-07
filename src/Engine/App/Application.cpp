@@ -51,6 +51,7 @@ void Application::Run() {
     GL::Renderer::SetBlendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
     GL::Renderer::EnableBlending();
     GL::Renderer::SetMode(GL::RenderMode::Fill);
+    GL::Renderer::EnableDepthTest();
 
     double lastTime = glfwGetTime();
 

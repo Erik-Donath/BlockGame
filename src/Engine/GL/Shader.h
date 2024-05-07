@@ -35,9 +35,9 @@ namespace Engine::GL {
         }
 
     protected:
-        glid m_id;
+        glId m_id;
         std::unordered_map<std::string, i32> m_locations;
 
-        static glid CompileShader(GLenum type, cstr source);
+        static glId CompileShader(GLenum type, cstr source);
     };
 }
