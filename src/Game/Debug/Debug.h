@@ -15,6 +15,9 @@ namespace Engine::Common {
     private:
         static bool s_vsync;
 
+        static bool s_active;
+        static bool s_lastPressed;
+
         static float s_renderPointSize;
         static float s_renderLineWidth;
         static GL::RenderMode s_renderMode;

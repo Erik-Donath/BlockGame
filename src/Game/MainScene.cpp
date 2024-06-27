@@ -4,6 +4,8 @@
 
 #include "MainScene.h"
 
+static u32 p = 0;
+
 MainScene::MainScene(): m_block(nullptr), m_camera(nullptr) { }
 
 MainScene::~MainScene() {

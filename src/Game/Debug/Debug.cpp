@@ -5,6 +5,7 @@
 #include "../../Engine/App/Window.h"
 #include "../../Engine/App/Gui.h"
 #include "../../Engine/GL/Renderer.h"
+#include "../../Engine/App/Input.h"
 
 #include "Debug.h"
 
@@ -30,6 +31,8 @@ static Engine::GL::RenderMode GetRenderModeFromOption(u8 id) {
 }
 
 bool Debug::s_vsync = false;
+bool Debug::s_active = false;
+bool Debug::s_lastPressed = false;
 
 float Debug::s_renderPointSize = 1.0f;
 float Debug::s_renderLineWidth = 1.0f;
@@ -42,9 +45,15 @@ void Debug::Setup() {
 
 void Debug::Finalize() { }
 
-void Debug::Update(double deltaTime) { }
+void Debug::Update(double deltaTime) {
+    bool pressed = App::Input::IsPressed(Key(E));
+    if (pressed && !s_lastPressed) s_active = !s_active;
+    s_lastPressed = pressed;
+}
 
 void Debug::Render(GLFWwindow *window) {
+    if(!s_active) return;
+
     ImGuiIO& io = ImGui::GetIO();
     ImGui::Begin("Application Info");
 
@@ -71,9 +80,9 @@ void Debug::Render(GLFWwindow *window) {
         ImGui::EndCombo();
     }
 
-    if(s_renderMode == Engine::GL::RenderMode::Point && ImGui::SliderFloat("Render Point Size", &s_renderPointSize, 1.0f, 10.0f))
+    if(s_renderMode == Engine::GL::RenderMode::Point && ImGui::SliderFloat("Render Point Size", &s_renderPointSize, 1.0f, 50.0f))
         GL::Renderer::SetMode(s_renderMode, s_renderLineWidth, s_renderPointSize);
-    if(s_renderMode == Engine::GL::RenderMode::Line && ImGui::SliderFloat("Render Line Width", &s_renderLineWidth, 1.0f, 10.0f))
+    if(s_renderMode == Engine::GL::RenderMode::Line && ImGui::SliderFloat("Render Line Width", &s_renderLineWidth, 1.0f, 50.0f))
         GL::Renderer::SetMode(s_renderMode, s_renderLineWidth, s_renderPointSize);
 
 

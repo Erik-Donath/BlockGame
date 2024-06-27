@@ -10,6 +10,10 @@
 namespace Engine::Scene {
     class Camera {
     public:
+        Camera() {
+            m_transform.SetPosition({0.0f, 0.0f, 3.0f});
+        }
+
         void Update(double deltaTime);
 
         void RecalculateProjectionMatrix(glm::ivec2& frameBufferSize);
