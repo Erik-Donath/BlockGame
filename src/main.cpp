@@ -1,14 +1,7 @@
-#include <iostream>
-#include "Defines.h"
+#include "Game/BlockGame.h"
 
-#include "Engine/App/Application.h"
-#include "Game/MainScene.h"
-
-int main() {
-    Engine::App::Application app;
-
-    std::shared_ptr<Engine::Scene::Scene> mainScene = std::make_shared<MainScene>();
-    app.Run(mainScene);
-
+int32_t main(int32_t argv, char* argc[]) {
+    BlockGame app;
+    app.run();
     return 0;
 }

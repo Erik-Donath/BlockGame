@@ -5,9 +5,10 @@ project(BlockGame)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/lib)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/out/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out/arc)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "GLFW lib only" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only" FORCE)
@@ -15,54 +16,30 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only" FORCE)
 
 ### Project Architecture
 add_executable(BlockGame
-        # Entry
-        src/Defines.h
         src/main.cpp
 
-        # Application
-        src/Engine/App/Application.h
-        src/Engine/App/Application.cpp
-        src/Engine/App/Window.h
-        src/Engine/App/Window.cpp
-        src/Engine/App/Input.h
-        src/Engine/App/Gui.h
-        src/Engine/App/Gui.cpp
-        src/Game/Debug/Debug.h
-        src/Game/Debug/Debug.cpp
+        src/Window.h src/Window.cpp
+        src/Application.h src/Application.cpp
+        src/GUI.h src/GUI.cpp
 
-        # GL
-        src/Engine/GL/GL.h
-        src/Engine/GL/GL.cpp
-        src/Engine/GL/VertexBuffer.h
-        src/Engine/GL/IndexBuffer.h
-        src/Engine/GL/VertexArray.h
-        src/Engine/GL/VertexArray.cpp
-        src/Engine/GL/Shader.h
-        src/Engine/GL/Shader.cpp
-        src/Engine/GL/Texture.h
-        src/Engine/GL/Texture.cpp
-        src/Engine/GL/Renderer.h
+        src/Buffer.h
+        src/GL.h src/GL.cpp
+        src/Shader.h src/Shader.cpp
+        src/VertexArray.h src/VertexArray.cpp
 
-        # Scene
-        src/Engine/Scene/Scene.h
-        src/Engine/Scene/Scene.cpp
-        src/Engine/Scene/Transform.h
-        src/Engine/Scene/Transform.cpp
-        src/Engine/Scene/Camera.h
-        src/Engine/Scene/Camera.cpp
+        src/Game/Util.h
+        src/Game/Test.h src/Game/Test.cpp
+        src/Game/BlockGame.h src/Game/BlockGame.cpp
 
-        # Game
-        src/Game/MainScene.h
-        src/Game/MainScene.cpp
-        src/Game/Block.h
-        src/Game/Block.cpp
-        src/Engine/Common/Recalc.h
-
+        src/Game/Camera.h src/Game/Camera.cpp
 )
 
-# Resource directory
-target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res")
-#target_compile_definitions(BlockGame PUBLIC RESOURCES_PATH="./res")
+# copy assets
+add_custom_target(Copy_Assets ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/res
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/res
+        COMMENT "Copying assets")
 
 ###Include Libaries
 set(Include_DIR "${PROJECT_SOURCE_DIR}/include")
